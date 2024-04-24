@@ -2,19 +2,15 @@ package tech.thatgravyboat.creeperoverhaul.common.utils.forge;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.event.ForgeEventFactory;
-import org.jetbrains.annotations.NotNull;
 import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
-
-import java.util.function.Supplier;
 
 public class PlatformUtilsImpl {
 
@@ -35,18 +31,9 @@ public class PlatformUtilsImpl {
         return usingOptifine;
     }
 
-    public static CreativeModeTab createTab(ResourceLocation loc, Supplier<ItemStack> icon) {
-        return new CreativeModeTab(loc.getNamespace() + "." + loc.getPath()) {
-            @Override
-            public @NotNull ItemStack makeIcon() {
-                return icon.get();
-            }
-        };
-    }
-
-    public static Explosion.BlockInteraction getInteractionForCreeper(BaseCreeper creeper) {
-        boolean destroyBlocks = ForgeEventFactory.getMobGriefingEvent(creeper.level, creeper) && CreepersConfig.destroyBlocks;
-        return destroyBlocks ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+    public static Level.ExplosionInteraction getInteractionForCreeper(BaseCreeper creeper) {
+        boolean destroyBlocks = ForgeEventFactory.getMobGriefingEvent(creeper.level(), creeper) && CreepersConfig.destroyBlocks;
+        return destroyBlocks ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
     }
 
     public static String formatShaderId(ResourceLocation location) {
@@ -64,7 +51,7 @@ public class PlatformUtilsImpl {
     public static Attribute getModAttribute(String name) {
         return switch (name) {
             case "swim_speed" -> ForgeMod.SWIM_SPEED.get();
-            case "reach_distance" -> ForgeMod.REACH_DISTANCE.get();
+            case "reach_distance" -> ForgeMod.ENTITY_REACH.get();
             default -> null;
         };
     }

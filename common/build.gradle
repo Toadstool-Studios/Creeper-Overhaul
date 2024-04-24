@@ -11,6 +11,7 @@ dependencies {
     modImplementation "software.bernie.geckolib:${rootProject.gecko_lib_fabric_version}"
 
     modApi "com.teamresourceful.resourcefulconfig:resourcefulconfig-common-$rootProject.minecraft_version:$rootProject.resourcefulconfig_version"
+    include(modApi("com.teamresourceful.resourcefullib:resourcefullib-common-$rootProject.minecraft_version:$rootProject.resourcefullib_version"))
 }
 
 publishing {

@@ -1,35 +1,41 @@
 package tech.thatgravyboat.creeperoverhaul.common.entity;
 
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import net.minecraft.world.entity.EntityType;
+import software.bernie.geckolib.animatable.GeoReplacedEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import tech.thatgravyboat.creeperoverhaul.common.utils.AnimationConstants;
 
-public class ReplacedCreeper implements IAnimatable {
+public class ReplacedCreeper implements GeoReplacedEntity {
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 5, this::predicate));
     }
 
-    private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.creeper.walk", ILoopType.EDefaultLoopTypes.LOOP));
+    private <P extends GeoAnimatable> PlayState predicate(AnimationState<P> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(AnimationConstants.WALK);
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.creeper.idle", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(AnimationConstants.IDLE);
         }
         return PlayState.CONTINUE;
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public EntityType<?> getReplacingEntityType() {
+        return EntityType.CREEPER;
     }
 }

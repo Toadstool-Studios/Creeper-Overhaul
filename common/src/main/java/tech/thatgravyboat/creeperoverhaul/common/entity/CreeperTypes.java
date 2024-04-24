@@ -2,7 +2,6 @@ package tech.thatgravyboat.creeperoverhaul.common.entity;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -65,7 +64,7 @@ public class CreeperTypes {
             .setAnimation(modLoc("animations/creeper.animation.json"))
             .addAfraidOf(EntityType.CAT)
             .addAfraidOf(EntityType.OCELOT)
-            .addImmunity(DamageSource.CACTUS)
+            //.addImmunity(DamageSources)
             .addAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5)
             .setDeathSounds(ModSounds.SAND_DEATH)
             .setExplosionSounds(ModSounds.SAND_EXPLOSION)
@@ -84,7 +83,7 @@ public class CreeperTypes {
             .setAnimation(modLoc("animations/creeper.animation.json"))
             .addAfraidOf(EntityType.CAT)
             .addAfraidOf(EntityType.OCELOT)
-            .addImmunity(DamageSource.CACTUS)
+            //.addImmunity(DamageSource.CACTUS)
             .addAttribute(Attributes.MAX_HEALTH, 30)
             .addAttribute(Attributes.KNOCKBACK_RESISTANCE, 1)
             .setDeathSounds(ModSounds.SAND_DEATH)
@@ -232,7 +231,7 @@ public class CreeperTypes {
             .setAnimation(modLoc("animations/creeper.animation.json"))
             .addAfraidOf(EntityType.CAT)
             .addAfraidOf(EntityType.OCELOT)
-            .addImmunity(DamageSource.DROWN)
+            //.addImmunity(DamageSource.DROWN)
             .addAttribute(Attributes.MAX_HEALTH, 15)
             .addAttribute("swim_speed", 2)
             .setDeathSounds(ModSounds.SAND_DEATH)
@@ -274,9 +273,9 @@ public class CreeperTypes {
             })
             .setAnimation(modLoc("animations/ocean.animation.json"))
             .addAttribute(Attributes.MAX_HEALTH, 16)
-            .addAttribute(Attributes.MOVEMENT_SPEED, 2)
+            .addAttribute(Attributes.MOVEMENT_SPEED, 1.7)
             .addAttribute("reach_distance", 3)
-            .addAttribute("swim_speed", 2)
+            .addAttribute("swim_speed", 1.7)
             .setDeathSounds(ModSounds.OCEAN_DEATH)
             .setHurtSound(creeper -> {
                 if (creeper instanceof PufferfishCreeper fish && fish.getPuffId() == 3) {

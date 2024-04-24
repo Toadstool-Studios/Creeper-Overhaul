@@ -31,7 +31,7 @@ public abstract class BaseCreeperMixin extends LivingEntity {
 
     @Override
     public void moveRelative(float speed, @NotNull Vec3 movementInput) {
-        FluidState fluidState = this.level.getFluidState(this.blockPosition());
+        FluidState fluidState = this.level().getFluidState(this.blockPosition());
         if (this.isInWater() && this.isAffectedByFluids() && !this.canStandOnFluid(fluidState)){
             super.moveRelative(speed * (float)this.getAttributeValue(FabricAttributes.SWIM_SPEED), movementInput);
             return;

@@ -20,10 +20,6 @@ import tech.thatgravyboat.creeperoverhaul.api.PluginRegistry;
 import tech.thatgravyboat.creeperoverhaul.client.forge.CreepersForgeClient;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModBlocks;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModSpawns;
-import tech.thatgravyboat.creeperoverhaul.common.registry.forge.ModBlocksImpl;
-import tech.thatgravyboat.creeperoverhaul.common.registry.forge.ModEntitiesImpl;
-import tech.thatgravyboat.creeperoverhaul.common.registry.forge.ModItemsImpl;
-import tech.thatgravyboat.creeperoverhaul.common.registry.forge.ModSoundsImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +32,6 @@ public class CreepersForge {
     public CreepersForge() {
         Creepers.init();
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        ModItemsImpl.ITEMS.register(bus);
-        ModBlocksImpl.BLOCKS.register(bus);
-        ModEntitiesImpl.ENTITIES.register(bus);
-        ModSoundsImpl.SOUNDS.register(bus);
 
         bus.addListener(this::onAttributes);
         bus.addListener(this::onComplete);

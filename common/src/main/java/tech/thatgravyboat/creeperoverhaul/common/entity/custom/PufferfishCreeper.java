@@ -6,7 +6,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -128,7 +127,7 @@ public class PufferfishCreeper extends WaterCreeper {
 
     @Override
     public void tick() {
-        if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi()) {
+        if (!this.level().isClientSide && this.isAlive() && this.isEffectiveAi()) {
             if (this.inflateCounter > 0) {
                 if (this.getPuffState() == 0) {
                     this.playSound(ModSounds.OCEAN_INFLATE.get(), this.getSoundVolume(), this.getVoicePitch());
@@ -158,7 +157,7 @@ public class PufferfishCreeper extends WaterCreeper {
     @Override
     public boolean doHurtTarget(@NotNull Entity entity) {
         byte state = this.getPuffState();
-        if (entity.hurt(DamageSource.mobAttack(this), (6f + state) * (this.isPowered() ? 2f : 1f))) {
+        if (entity.hurt(level().damageSources().mobAttack(this), (6f + state) * (this.isPowered() ? 2f : 1f))) {
             this.playSound(SoundEvents.PUFFER_FISH_STING, 1.0F, 1.0F);
             if (entity instanceof LivingEntity living) {
                 living.addEffect(new MobEffectInstance(MobEffects.POISON, 60 * state, 0));
@@ -200,7 +199,7 @@ public class PufferfishCreeper extends WaterCreeper {
 
         @Override
         public boolean canUse() {
-            List<Player> list = this.creeper.level.getEntitiesOfClass(Player.class, this.creeper.getBoundingBox().inflate(6.0), creeper::canTouch);
+            List<Player> list = this.creeper.level().getEntitiesOfClass(Player.class, this.creeper.getBoundingBox().inflate(6.0), creeper::canTouch);
             return !list.isEmpty();
         }
 

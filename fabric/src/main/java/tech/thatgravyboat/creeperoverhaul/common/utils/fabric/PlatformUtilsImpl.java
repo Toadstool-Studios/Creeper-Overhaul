@@ -1,32 +1,24 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils.fabric;
 
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
 import tech.thatgravyboat.creeperoverhaul.common.registry.fabric.FabricAttributes;
-
-import java.util.function.Supplier;
 
 public class PlatformUtilsImpl {
     public static boolean shouldHidePowerLayer() {
         return false;
     }
 
-    public static CreativeModeTab createTab(ResourceLocation loc, Supplier<ItemStack> icon) {
-        return FabricItemGroupBuilder.build(loc, icon);
-    }
-
-    public static Explosion.BlockInteraction getInteractionForCreeper(BaseCreeper creeper) {
-        boolean destroyBlocks = creeper.level.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).get() && CreepersConfig.destroyBlocks;
-        return destroyBlocks ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+    public static Level.ExplosionInteraction getInteractionForCreeper(BaseCreeper creeper) {
+        boolean destroyBlocks = creeper.level().getGameRules().getRule(GameRules.RULE_MOBGRIEFING).get() && CreepersConfig.destroyBlocks;
+        return destroyBlocks ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
     }
 
     public static String formatShaderId(ResourceLocation location) {

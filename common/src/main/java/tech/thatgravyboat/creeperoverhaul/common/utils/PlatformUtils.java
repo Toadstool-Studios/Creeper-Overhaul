@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
@@ -20,12 +21,7 @@ public class PlatformUtils {
     }
 
     @ExpectPlatform
-    public static CreativeModeTab createTab(ResourceLocation loc, Supplier<ItemStack> icon) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static Explosion.BlockInteraction getInteractionForCreeper(BaseCreeper creeper) {
+    public static Level.ExplosionInteraction getInteractionForCreeper(BaseCreeper creeper) {
         throw new AssertionError();
     }
 

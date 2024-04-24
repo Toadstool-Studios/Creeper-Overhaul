@@ -1,6 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": ["minecraft:dripstone_caves", "minecraft:lush_caves"],
+  "biomes": "#creeperoverhaul:is_cave",
   "spawners" : {
     "type": "creeperoverhaul:dripstone_creeper",
     "weight": 75,

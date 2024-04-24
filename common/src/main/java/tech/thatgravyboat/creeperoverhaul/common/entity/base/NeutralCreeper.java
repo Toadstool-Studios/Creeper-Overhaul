@@ -41,12 +41,12 @@ public class NeutralCreeper extends BaseCreeper implements NeutralMob {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        readPersistentAngerSaveData(this.level, compound);
+        readPersistentAngerSaveData(this.level(), compound);
     }
 
     @Override
     protected void customServerAiStep() {
-        if (this.level instanceof ServerLevel serverLevel) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             this.updatePersistentAnger(serverLevel, false);
         }
     }

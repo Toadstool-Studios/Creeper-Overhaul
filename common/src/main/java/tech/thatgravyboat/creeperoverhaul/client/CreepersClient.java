@@ -6,8 +6,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.renderers.geo.GeoReplacedEntityRenderer;
 import tech.thatgravyboat.creeperoverhaul.client.renderer.normal.CreeperModel;
 import tech.thatgravyboat.creeperoverhaul.client.renderer.normal.CreeperRenderer;
 import tech.thatgravyboat.creeperoverhaul.client.renderer.replaced.ReplacedCreeperRenderer;
@@ -59,12 +57,6 @@ public class CreepersClient {
 
     @ExpectPlatform
     public static void registerBlockRenderType(Supplier<Block> block, RenderType type) {
-        throw new AssertionError();
-    }
-
-    @SuppressWarnings("rawtypes")
-    @ExpectPlatform
-    public static void registerReplacedEntity(Class<? extends IAnimatable> clazz, GeoReplacedEntityRenderer renderer) {
         throw new AssertionError();
     }
 }

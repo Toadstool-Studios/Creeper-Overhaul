@@ -1,7 +1,6 @@
 package tech.thatgravyboat.creeperoverhaul.common.entity.base;
 
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MoverType;
@@ -14,14 +13,13 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationProcessor;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 import tech.thatgravyboat.creeperoverhaul.common.entity.goals.WaterCreeperMoveControl;
+import tech.thatgravyboat.creeperoverhaul.common.utils.AnimationConstants;
 
 public class WaterCreeper extends BaseCreeper {
 
@@ -64,7 +62,7 @@ public class WaterCreeper extends BaseCreeper {
             this.setAirSupply(i - 1);
             if (this.getAirSupply() == -20) {
                 this.setAirSupply(0);
-                this.hurt(DamageSource.DROWN, 2.0F);
+                this.hurt(level().damageSources().drown(), 2.0F);
             }
         } else {
             this.setAirSupply(300);
@@ -87,10 +85,9 @@ public class WaterCreeper extends BaseCreeper {
 
     @Override
     public void aiStep() {
-        if (!this.isInWater() && this.onGround && this.verticalCollision) {
-            this.setDeltaMovement(this.getDeltaMovement().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F, 0.4, (this.random.nextFloat() * 2.0F - 1.0F) * 0.05F));
-            this.onGround = false;
-            this.hasImpulse = true;
+        if (!this.isInWater() && this.onGround() && this.verticalCollision) {
+            this.setOnGround(false);
+            this.push((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F, 0.4, (this.random.nextFloat() * 2.0F - 1.0F) * 0.05F);
             this.playSound(type.getFlopSound(this).orElse(SoundEvents.COD_FLOP), this.getSoundVolume(), this.getVoicePitch());
         }
 
@@ -102,22 +99,20 @@ public class WaterCreeper extends BaseCreeper {
         return false;
     }
 
-    @Override
-    protected <E extends IAnimatable> PlayState action(AnimationEvent<E> event) {
-        Animation animation = event.getController().getCurrentAnimation();
+    protected <E extends GeoAnimatable> PlayState action(AnimationState<E> event) {
+        AnimationProcessor.QueuedAnimation animation = event.getController().getCurrentAnimation();
         if (isAttacking()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.creeper.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+            event.getController().setAnimation(AnimationConstants.ATTACK);
             return PlayState.CONTINUE;
-        } else if (animation != null && animation.animationName.equals("animation.creeper.attack") && event.getController().getAnimationState().equals(AnimationState.Running)) {
+        } else if (animation != null && animation.animation().name().equals("animation.creeper.attack") && event.getController().getAnimationState().equals(AnimationController.State.RUNNING)) {
             return PlayState.CONTINUE;
         } else if (!isInWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.creeper.flop", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(AnimationConstants.FLOP);
             return PlayState.CONTINUE;
         } else if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.creeper.swim", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(AnimationConstants.SWIM);
             return PlayState.CONTINUE;
         }
-        event.getController().markNeedsReload();
         return PlayState.STOP;
     }
 }

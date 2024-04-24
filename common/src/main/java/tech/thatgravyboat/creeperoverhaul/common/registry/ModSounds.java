@@ -1,6 +1,9 @@
 package tech.thatgravyboat.creeperoverhaul.common.registry;
 
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
@@ -8,6 +11,8 @@ import tech.thatgravyboat.creeperoverhaul.Creepers;
 import java.util.function.Supplier;
 
 public class ModSounds {
+
+    public static final ResourcefulRegistry<SoundEvent> SOUNDS = ResourcefulRegistries.create(BuiltInRegistries.SOUND_EVENT, Creepers.MODID);
 
     public static final Supplier<SoundEvent> PLANT_DEATH = registerSound("entity.plant.creeper.death");
     public static final Supplier<SoundEvent> PLANT_EXPLOSION = registerSound("entity.plant.creeper.explosion");
@@ -37,16 +42,7 @@ public class ModSounds {
     public static final Supplier<SoundEvent> OCEAN_INFLATE = registerSound("entity.ocean.creeper.inflate");
     public static final Supplier<SoundEvent> OCEAN_DEFLATE = registerSound("entity.ocean.creeper.deflate");
 
-    public static void init() {
-        // init class
-    }
-
     private static Supplier<SoundEvent> registerSound(String id) {
-        return registerSound(id, () -> new SoundEvent(new ResourceLocation(Creepers.MODID, id)));
-    }
-
-    @ExpectPlatform
-    public static Supplier<SoundEvent> registerSound(String id, Supplier<SoundEvent> sound) {
-        throw new AssertionError();
+        return SOUNDS.register(id, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Creepers.MODID, id)));
     }
 }

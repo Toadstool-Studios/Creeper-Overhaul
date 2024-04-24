@@ -35,7 +35,7 @@ public class CreeperAvoidEntitiesGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        List<Entity> afraidEntities = this.creeper.level.getEntities(this.creeper, this.creeper.getBoundingBox().inflate(this.maxDistance, 3D, this.maxDistance), this::isAfraidOf);
+        List<Entity> afraidEntities = this.creeper.level().getEntities(this.creeper, this.creeper.getBoundingBox().inflate(this.maxDistance, 3D, this.maxDistance), this::isAfraidOf);
         this.entityToAvoid = getNearestEntity(afraidEntities, this.creeper);
         if (this.entityToAvoid == null) return false;
         Vec3 posAway = DefaultRandomPos.getPosAway(this.creeper, 16, 7, this.entityToAvoid.position());

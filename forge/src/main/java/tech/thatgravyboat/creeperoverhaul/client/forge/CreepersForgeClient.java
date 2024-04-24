@@ -13,9 +13,9 @@ public class CreepersForgeClient {
 
     public static void onShaderRegister(RegisterShadersEvent event) {
         try {
-        var shader = RenderTypes.registerShader(event.getResourceManager());
-        event.registerShader(shader.getFirst(), shader.getSecond());
-        }catch (Exception e) {
+            var shader = RenderTypes.registerShader(event.getResourceProvider());
+            event.registerShader(shader.getFirst(), shader.getSecond());
+        } catch (Exception e) {
             throw new RuntimeException("[Creeper Overhaul] Shaders could not be reloaded", e);
         }
     }

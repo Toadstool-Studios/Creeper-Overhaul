@@ -29,26 +29,6 @@
           "name": "minecraft:white_wool"
         }
       ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:tag",
-          "name": "minecraft:creeper_drop_music_discs",
-          "expand": true
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "predicate": {
-            "type": "#minecraft:skeletons"
-          },
-          "entity": "killer"
-        }
-      ]
     }
   ]
 }

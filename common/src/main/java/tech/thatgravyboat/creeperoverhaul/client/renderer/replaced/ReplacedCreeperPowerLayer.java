@@ -6,40 +6,45 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Creeper;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
-import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
-import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
 import tech.thatgravyboat.creeperoverhaul.client.RenderTypes;
 import tech.thatgravyboat.creeperoverhaul.common.entity.ReplacedCreeper;
 import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
-public class ReplacedCreeperPowerLayer extends GeoLayerRenderer {
+public class ReplacedCreeperPowerLayer extends GeoRenderLayer<ReplacedCreeper> {
 
     private static final ResourceLocation PLAINS_CHARGED_TEXTURE = new ResourceLocation(Creepers.MODID, "textures/entity/armor/creeper_armor.png");
 
-    public ReplacedCreeperPowerLayer(IGeoRenderer<ReplacedCreeper> entityRendererIn) {
-        super(entityRendererIn);
+    private final ReplacedCreeperRenderer renderer;
+
+    public ReplacedCreeperPowerLayer(ReplacedCreeperRenderer renderer) {
+        super(renderer);
+        this.renderer = renderer;
     }
 
+
     @Override
-    public void render(PoseStack stack, MultiBufferSource buffer, int packedLightIn, Entity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, ReplacedCreeper animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
         if(PlatformUtils.shouldHidePowerLayer()) return;
-        if (entity instanceof Creeper creeper && creeper.isPowered()) {
+        Creeper creeper = this.renderer.getCurrentEntity();
+        if (creeper.isPowered()) {
 
-            float f = (float)creeper.tickCount + partialTicks;
+            float f = (float)creeper.tickCount + partialTick;
 
-            GeoModel chargedModel = this.getEntityModel().getModel(this.getEntityModel().getModelResource(null));
-            RenderType renderType = RenderTypes.getSwirl(PLAINS_CHARGED_TEXTURE, f * 0.005F % 1F,  f * 0.005F % 1F);
-            VertexConsumer armorConsumer = buffer.getBuffer(renderType);
+            RenderType type = RenderTypes.getSwirl(PLAINS_CHARGED_TEXTURE, f * 0.005F % 1F,  f * 0.005F % 1F);
+            VertexConsumer armorConsumer = bufferSource.getBuffer(type);
 
-            getRenderer().render(chargedModel, creeper, partialTicks,
-                    null, stack, null, armorConsumer,
-                    packedLightIn, OverlayTexture.NO_OVERLAY,
-                    1f, 1f, 1f, 1f);
+            getRenderer().reRender(
+                    getDefaultBakedModel(animatable), poseStack,
+                    bufferSource, animatable,
+                    type, armorConsumer,
+                    partialTick,
+                    packedLight, OverlayTexture.NO_OVERLAY,
+                    1f, 1f, 1f, 1f
+            );
         }
     }
 }

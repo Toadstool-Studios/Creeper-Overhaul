@@ -21,7 +21,7 @@ public class CreeperMeleeAttackGoal extends MeleeAttackGoal {
         double d0 = this.getAttackReachSqr(enemy);
         if (pDistToEnemySqr <= d0 && this.isTimeToAttack()) {
             this.resetAttackCooldown();
-            this.creeper.type.getHitSound(this.creeper).ifPresent(s -> this.creeper.level.playSound(null, this.creeper, s, this.creeper.getSoundSource(), 0.5F, 1.0F));
+            this.creeper.type.getHitSound(this.creeper).ifPresent(s -> this.creeper.level().playSound(null, this.creeper, s, this.creeper.getSoundSource(), 0.5F, 1.0F));
             this.mob.doHurtTarget(enemy);
         } else if (pDistToEnemySqr <= d0) {
             creeper.setAttacking(true);

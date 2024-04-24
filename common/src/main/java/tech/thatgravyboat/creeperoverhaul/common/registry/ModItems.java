@@ -1,6 +1,11 @@
 package tech.thatgravyboat.creeperoverhaul.common.registry;
 
+import com.teamresourceful.resourcefullib.common.exceptions.NotImplementedException;
+import com.teamresourceful.resourcefullib.common.item.tabs.ResourcefulCreativeTab;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -13,75 +18,62 @@ import java.util.function.Supplier;
 
 public class ModItems {
 
-    public static final CreativeModeTab TAB = PlatformUtils.createTab(new ResourceLocation(Creepers.MODID, "item_group"), Items.CREEPER_HEAD::getDefaultInstance);
+    public static final ResourcefulRegistry<Item> ITEMS = ResourcefulRegistries.create(BuiltInRegistries.ITEM, Creepers.MODID);
 
-    public static final Supplier<SpawnEggItem> JUNGLE_SPAWN_EGG = registerSpawnEgg("jungle_creeper_spawn_egg",
-            ModEntities.JUNGLE_CREEPER, 0x507541, 0x59461A, getModProperties());
+    public static final Supplier<CreativeModeTab> TAB = new ResourcefulCreativeTab(new ResourceLocation(Creepers.MODID, "item_group"))
+            .setItemIcon(() -> Items.CREEPER_HEAD)
+            .addRegistry(ITEMS)
+            .build();
 
-    public static final Supplier<SpawnEggItem> BAMBOO_SPAWN_EGG = registerSpawnEgg("bamboo_creeper_spawn_egg",
-            ModEntities.BAMBOO_CREEPER, 0x599003, 0x1F3322, getModProperties());
+    public static final Supplier<SpawnEggItem> JUNGLE_SPAWN_EGG = ITEMS.register("jungle_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.JUNGLE_CREEPER, 0x507541, 0x59461A, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> DESERT_SPAWN_EGG = registerSpawnEgg("desert_creeper_spawn_egg",
-            ModEntities.DESERT_CREEPER, 0xD1BA8A, 0x966E3D, getModProperties());
+    public static final Supplier<SpawnEggItem> BAMBOO_SPAWN_EGG = ITEMS.register("bamboo_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.BAMBOO_CREEPER, 0x599003, 0x1F3322, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> BADLANDS_SPAWN_EGG = registerSpawnEgg("badlands_creeper_spawn_egg",
-            ModEntities.BADLANDS_CREEPER, 0xA36C4B, 0xE8C943, getModProperties());
+    public static final Supplier<SpawnEggItem> DESERT_SPAWN_EGG = ITEMS.register("desert_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.DESERT_CREEPER, 0xD1BA8A, 0x966E3D, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> HILLS_SPAWN_EGG = registerSpawnEgg("hills_creeper_spawn_egg",
-            ModEntities.HILLS_CREEPER, 0x9A9B88, 0x4F5E53, getModProperties());
+    public static final Supplier<SpawnEggItem> BADLANDS_SPAWN_EGG = ITEMS.register("badlands_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.BADLANDS_CREEPER, 0xA36C4B, 0xE8C943, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> SAVANNAH_SPAWN_EGG = registerSpawnEgg("savannah_creeper_spawn_egg",
-            ModEntities.SAVANNAH_CREEPER, 0xAD5D32, 0x6E3A29, getModProperties());
+    public static final Supplier<SpawnEggItem> HILLS_SPAWN_EGG = ITEMS.register("hills_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.HILLS_CREEPER, 0x9A9B88, 0x4F5E53, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> MUSHROOM_SPAWN_EGG = registerSpawnEgg("mushroom_creeper_spawn_egg",
-            ModEntities.MUSHROOM_CREEPER, 0x60526A, 0xD15A4B, getModProperties());
+    public static final Supplier<SpawnEggItem> SAVANNAH_SPAWN_EGG = ITEMS.register("savannah_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.SAVANNAH_CREEPER, 0xAD5D32, 0x6E3A29, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> SWAMP_SPAWN_EGG = registerSpawnEgg("swamp_creeper_spawn_egg",
-            ModEntities.SWAMP_CREEPER, 0x4F5835, 0x1B2824, getModProperties());
+    public static final Supplier<SpawnEggItem> MUSHROOM_SPAWN_EGG = ITEMS.register("mushroom_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.MUSHROOM_CREEPER, 0x60526A, 0xD15A4B, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> DRIPSTONE_SPAWN_EGG = registerSpawnEgg("dripstone_creeper_spawn_egg",
-            ModEntities.DRIPSTONE_CREEPER, 0x836356, 0xA08D71, getModProperties());
+    public static final Supplier<SpawnEggItem> SWAMP_SPAWN_EGG = ITEMS.register("swamp_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.SWAMP_CREEPER, 0x4F5835, 0x1B2824, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> CAVE_SPAWN_EGG = registerSpawnEgg("cave_creeper_spawn_egg",
-            ModEntities.CAVE_CREEPER, 0x7E847C, 0x3A3F3E, getModProperties());
+    public static final Supplier<SpawnEggItem> DRIPSTONE_SPAWN_EGG = ITEMS.register("dripstone_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.DRIPSTONE_CREEPER, 0x836356, 0xA08D71, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> DARK_OAK_SPAWN_EGG = registerSpawnEgg("dark_oak_creeper_spawn_egg",
-            ModEntities.DARK_OAK_CREEPER, 0x3F311D, 0x1E1519, getModProperties());
+    public static final Supplier<SpawnEggItem> CAVE_SPAWN_EGG = ITEMS.register("cave_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.CAVE_CREEPER, 0x7E847C, 0x3A3F3E, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> SPRUCE_SPAWN_EGG = registerSpawnEgg("spruce_creeper_spawn_egg",
-            ModEntities.SPRUCE_CREEPER, 0x888788, 0x738552, getModProperties());
+    public static final Supplier<SpawnEggItem> DARK_OAK_SPAWN_EGG = ITEMS.register("dark_oak_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.DARK_OAK_CREEPER, 0x3F311D, 0x1E1519, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> BEACH_SPAWN_EGG = registerSpawnEgg("beach_creeper_spawn_egg",
-            ModEntities.BEACH_CREEPER, 0xDAC896, 0x704E3A, getModProperties());
+    public static final Supplier<SpawnEggItem> SPRUCE_SPAWN_EGG = ITEMS.register("spruce_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.SPRUCE_CREEPER, 0x888788, 0x738552, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> SNOWY_SPAWN_EGG = registerSpawnEgg("snowy_creeper_spawn_egg",
-            ModEntities.SNOWY_CREEPER, 0xBECDD8, 0xE8F8F9, getModProperties());
+    public static final Supplier<SpawnEggItem> BEACH_SPAWN_EGG = ITEMS.register("beach_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.BEACH_CREEPER, 0xDAC896, 0x704E3A, new Item.Properties()));
 
-    public static final Supplier<SpawnEggItem> OCEAN_SPAWN_EGG = registerSpawnEgg("ocean_creeper_spawn_egg",
-            ModEntities.OCEAN_CREEPER, 0x84D89E, 0xEFA662, getModProperties());
+    public static final Supplier<SpawnEggItem> SNOWY_SPAWN_EGG = ITEMS.register("snowy_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.SNOWY_CREEPER, 0xBECDD8, 0xE8F8F9, new Item.Properties()));
 
-    public static final Supplier<Item> TINY_CACTUS = registerItem("tiny_cactus", () -> createCactus(ModBlocks.TINY_CACTUS.get(), getModProperties()));
+    public static final Supplier<SpawnEggItem> OCEAN_SPAWN_EGG = ITEMS.register("ocean_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.OCEAN_CREEPER, 0x84D89E, 0xEFA662, new Item.Properties()));
 
-    public static void init() {
-        //Init Class
-    }
-
-    private static Item.Properties getModProperties() {
-        return new Item.Properties().tab(TAB);
-    }
+    public static final Supplier<Item> TINY_CACTUS =  ITEMS.register("tiny_cactus", () -> new BlockItem(ModBlocks.TINY_CACTUS.get(), new Item.Properties()));
 
     @ExpectPlatform
-    public static <T extends Item> Supplier<T> registerItem(String id, Supplier<T> item) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static <E extends Mob, T extends EntityType<E>> Supplier<SpawnEggItem> registerSpawnEgg(String id, Supplier<T> entity, int primary, int second, Item.Properties properties) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static BlockItem createCactus(Block block, Item.Properties properties) {
-        throw new AssertionError();
+    public static <E extends Mob, T extends EntityType<E>> SpawnEggItem createSpawnEgg(Supplier<T> entity, int primaryColor, int secondaryColor, Item.Properties properties) {
+        throw new NotImplementedException();
     }
 }
