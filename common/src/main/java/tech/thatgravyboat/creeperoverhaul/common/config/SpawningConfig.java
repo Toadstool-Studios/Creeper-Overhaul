@@ -1,16 +1,11 @@
 package tech.thatgravyboat.creeperoverhaul.common.config;
 
-import com.teamresourceful.resourcefulconfig.common.annotations.Category;
-import com.teamresourceful.resourcefulconfig.common.annotations.Comment;
-import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
-import com.teamresourceful.resourcefulconfig.common.config.EntryType;
-import com.teamresourceful.resourcefulconfig.web.annotations.WebInfo;
+import com.teamresourceful.resourcefulconfig.api.annotations.Category;
+import com.teamresourceful.resourcefulconfig.api.annotations.Comment;
+import com.teamresourceful.resourcefulconfig.api.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
 
-@Category(
-    id = "spawning",
-    translation = "Spawning Options"
-)
-@WebInfo(icon = "globe-2")
+@Category("spawning")
 public final class SpawningConfig {
 
     @ConfigEntry(

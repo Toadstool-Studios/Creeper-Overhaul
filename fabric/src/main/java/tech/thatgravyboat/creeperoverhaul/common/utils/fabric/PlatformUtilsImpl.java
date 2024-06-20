@@ -21,10 +21,6 @@ public class PlatformUtilsImpl {
         return destroyBlocks ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
     }
 
-    public static String formatShaderId(ResourceLocation location) {
-        return location.getNamespace() + "_" + location.getPath();
-    }
-
     public static boolean isShears(ItemStack stack) {
         return stack.getItem() instanceof ShearsItem;
     }

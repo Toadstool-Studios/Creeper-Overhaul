@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#minecraft:has_structure/mineshaft_mesa",
+  "spawners" : {
+    "type": "creeperoverhaul:badlands_creeper",
+    "weight": 75,
+    "minCount": 2,
+    "maxCount": 2
+  }
+}

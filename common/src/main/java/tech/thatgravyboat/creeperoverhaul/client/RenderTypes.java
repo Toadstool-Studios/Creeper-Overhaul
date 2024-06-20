@@ -2,16 +2,12 @@ package tech.thatgravyboat.creeperoverhaul.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceProvider;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
-import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 
-import java.io.IOException;
 import java.util.function.Consumer;
 
 public class RenderTypes extends RenderType {
@@ -24,8 +20,8 @@ public class RenderTypes extends RenderType {
         super(string, vertexFormat, mode, i, bl, bl2, runnable, runnable2);
     }
 
-    public static Pair<ShaderInstance, Consumer<ShaderInstance>> registerShader(ResourceProvider provider) throws IOException {
-        return new Pair<>(new ShaderInstance(provider, PlatformUtils.formatShaderId(ENERGY_SWIRL_RENDERTYPE), DefaultVertexFormat.NEW_ENTITY), RenderTypes::setEnergyShader);
+    public static void registerShaders(Registrar registrar) {
+        registrar.register(ENERGY_SWIRL_RENDERTYPE, DefaultVertexFormat.NEW_ENTITY, RenderTypes::setEnergyShader);
     }
 
     public static void setEnergyShader(ShaderInstance shader) {
@@ -33,7 +29,7 @@ public class RenderTypes extends RenderType {
     }
 
     public static RenderType getSwirl(ResourceLocation location, float u, float v) {
-        return create(PlatformUtils.formatShaderId(ENERGY_SWIRL_RENDERTYPE),
+        return create(ENERGY_SWIRL_RENDERTYPE.toString(),
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 256,
@@ -63,5 +59,9 @@ public class RenderTypes extends RenderType {
                         .setWriteMaskState(COLOR_WRITE)
                         .createCompositeState(false)
         );
+    }
+
+    public interface Registrar {
+        void register(ResourceLocation id, VertexFormat vertexFormat, Consumer<ShaderInstance> loadCallback);
     }
 }

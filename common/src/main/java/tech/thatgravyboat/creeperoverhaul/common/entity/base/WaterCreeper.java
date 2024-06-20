@@ -40,18 +40,13 @@ public class WaterCreeper extends BaseCreeper {
     }
 
     @Override
-    protected PathNavigation createNavigation(@NotNull Level level) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
         return new WaterBoundPathNavigation(this, level);
     }
 
     @Override
-    public MobType getMobType() {
+    public @NotNull MobType getMobType() {
         return MobType.WATER;
-    }
-
-    @Override
-    public boolean canBreatheUnderwater() {
-        return true;
     }
 
     @Override

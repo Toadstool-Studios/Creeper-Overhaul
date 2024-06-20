@@ -177,7 +177,7 @@ public class PufferfishCreeper extends WaterCreeper {
     }
 
     @Override
-    public EntityDimensions getDimensions(@NotNull Pose pose) {
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
         return DIMENSIONS.get(this.getPuffId() - 1);
     }
 

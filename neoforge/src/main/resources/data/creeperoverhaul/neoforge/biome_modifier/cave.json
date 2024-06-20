@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#creeperoverhaul:where_creepers_spawn",
+  "spawners" : {
+    "type": "creeperoverhaul:cave_creeper",
+    "weight": 50,
+    "minCount": 2,
+    "maxCount": 2
+  }
+}

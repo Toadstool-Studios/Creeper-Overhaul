@@ -1,7 +1,0 @@
-{
-  "type": "forge:remove_spawns",
-  "biomes": "#creeperoverhaul:where_creepers_spawn",
-  "entity_types": [
-    "minecraft:creeper"
-  ]
-}

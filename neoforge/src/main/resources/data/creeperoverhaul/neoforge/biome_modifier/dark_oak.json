@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#creeperoverhaul:is_darkforest",
+  "spawners" : {
+    "type": "creeperoverhaul:dark_oak_creeper",
+    "weight": 75,
+    "minCount": 2,
+    "maxCount": 2
+  }
+}

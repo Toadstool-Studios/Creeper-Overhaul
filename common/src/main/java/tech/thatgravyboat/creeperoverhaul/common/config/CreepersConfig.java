@@ -1,37 +1,38 @@
 package tech.thatgravyboat.creeperoverhaul.common.config;
 
-import com.teamresourceful.resourcefulconfig.common.annotations.Comment;
-import com.teamresourceful.resourcefulconfig.common.annotations.Config;
-import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
-import com.teamresourceful.resourcefulconfig.common.annotations.InlineCategory;
-import com.teamresourceful.resourcefulconfig.common.config.EntryType;
-import com.teamresourceful.resourcefulconfig.web.annotations.Link;
-import com.teamresourceful.resourcefulconfig.web.annotations.WebInfo;
+import com.teamresourceful.resourcefulconfig.api.annotations.Comment;
+import com.teamresourceful.resourcefulconfig.api.annotations.Config;
+import com.teamresourceful.resourcefulconfig.api.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.api.annotations.ConfigInfo;
+import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
 
-@Config("creeperoverhaul")
-@WebInfo(
+@Config(
+        value = "creeperoverhaul",
+        categories = {SpawningConfig.class}
+)
+@ConfigInfo(
         icon = "creeper",
         title = "Creeper Overhaul",
         description = "Biome specific creepers",
-        color = "#7BB252",
         links = {
-                @Link(
+                @ConfigInfo.Link(
                         value = "https://modrinth.com/mod/creeper-overhaul",
                         icon = "modrinth",
-                        title = "Modrinth"
+                        text = "Modrinth"
                 ),
-                @Link(
+                @ConfigInfo.Link(
                         value = "https://curseforge.com/minecraft/mc-mods/creeper-overhaul",
                         icon = "curseforge",
-                        title = "Curseforge"
+                        text = "Curseforge"
                 ),
-                @Link(
+                @ConfigInfo.Link(
                         value = "https://github.com/bonsaistudi0s/Creeper-Overhaul",
                         icon = "github",
-                        title = "Github"
+                        text = "Github"
                 )
         }
 )
+@ConfigInfo.Color("#7BB252")
 public final class CreepersConfig {
 
     @ConfigEntry(
@@ -40,10 +41,4 @@ public final class CreepersConfig {
             translation = "Destroy Blocks")
     @Comment("Changes the Creeper Overhaul creepers to destroy blocks or not.")
     public static boolean destroyBlocks = true;
-
-    @InlineCategory
-    public static ClientConfig client;
-
-    @InlineCategory
-    public static SpawningConfig spawning;
 }

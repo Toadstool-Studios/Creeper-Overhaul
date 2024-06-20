@@ -20,11 +20,6 @@ public class ModItems {
 
     public static final ResourcefulRegistry<Item> ITEMS = ResourcefulRegistries.create(BuiltInRegistries.ITEM, Creepers.MODID);
 
-    public static final Supplier<CreativeModeTab> TAB = new ResourcefulCreativeTab(new ResourceLocation(Creepers.MODID, "item_group"))
-            .setItemIcon(() -> Items.CREEPER_HEAD)
-            .addRegistry(ITEMS)
-            .build();
-
     public static final Supplier<SpawnEggItem> JUNGLE_SPAWN_EGG = ITEMS.register("jungle_creeper_spawn_egg", () -> createSpawnEgg(
             ModEntities.JUNGLE_CREEPER, 0x507541, 0x59461A, new Item.Properties()));
 

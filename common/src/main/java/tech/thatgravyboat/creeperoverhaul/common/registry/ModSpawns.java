@@ -62,9 +62,9 @@ public class ModSpawns {
 
     public static boolean checkDayMonsterSpawnRulesAbove(EntityType<? extends Monster> pType, ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
         BlockState state = pLevel.getBlockState(pPos.below());
-        boolean isGrassLike = state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(Blocks.MYCELIUM) || state.is(Blocks.DIRT);
+        boolean isGrassLike = state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(Blocks.MYCELIUM) || state.is(BlockTags.DIRT);
         return pPos.getY() > pLevel.getSeaLevel() && pLevel.getDifficulty() != Difficulty.PEACEFUL && Monster.checkMobSpawnRules(pType, pLevel, pReason, pPos, pRandom) &&
-                (isGrassLike || state.is(BlockTags.BASE_STONE_OVERWORLD) || state.getBlock() instanceof LeavesBlock);
+                (isGrassLike || state.getBlock() instanceof LeavesBlock);
     }
 
 

@@ -1,16 +1,17 @@
 package tech.thatgravyboat.creeperoverhaul.common.config;
 
-import com.teamresourceful.resourcefulconfig.common.annotations.Category;
-import com.teamresourceful.resourcefulconfig.common.annotations.Comment;
-import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
-import com.teamresourceful.resourcefulconfig.common.config.EntryType;
-import com.teamresourceful.resourcefulconfig.web.annotations.WebInfo;
+import com.teamresourceful.resourcefulconfig.api.annotations.*;
+import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
 
-@Category(
-    id = "client",
-    translation = "Client Options"
+@Config(
+    "crepperoverhaul-client"
 )
-@WebInfo(icon = "settings-2")
+@ConfigInfo(
+    icon = "creeper",
+    title = "Creeper Overhaul Client",
+    description = "Client side configuration for Creeper Overhaul"
+)
+@ConfigOption.Hidden
 public final class ClientConfig {
 
     @ConfigEntry(

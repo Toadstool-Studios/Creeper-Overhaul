@@ -50,46 +50,46 @@ public class CreepersFabric implements ModInitializer {
 
     public void addCreepers() {
         addCreeper(tag(BiomeTags.IS_BEACH), ModEntities.BEACH_CREEPER);
-        addCreeper(tag(BiomeTags.IS_BEACH), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.IS_BEACH), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(isSnowing(), ModEntities.SNOWY_CREEPER);
-        addCreeper(isSnowing(), ModEntities.CAVE_CREEPER);
+        addCreeper(isSnowing(), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.HAS_DESERT_PYRAMID), ModEntities.DESERT_CREEPER);
-        addCreeper(tag(BiomeTags.HAS_DESERT_PYRAMID), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.HAS_DESERT_PYRAMID), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.IS_HILL), ModEntities.HILLS_CREEPER);
-        addCreeper(tag(BiomeTags.IS_HILL), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.IS_HILL), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.IS_SAVANNA), ModEntities.SAVANNAH_CREEPER);
-        addCreeper(tag(BiomeTags.IS_SAVANNA), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.IS_SAVANNA), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.HAS_MINESHAFT_MESA), ModEntities.BADLANDS_CREEPER);
-        addCreeper(tag(BiomeTags.HAS_MINESHAFT_MESA), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.HAS_MINESHAFT_MESA), ModEntities.CAVE_CREEPER, 50);
 
         BiomeModifications.addSpawn(tag(IS_MUSHROOM), ModEntities.MUSHROOM_CREEPER.get().getCategory(), ModEntities.MUSHROOM_CREEPER.get(), 10, 1, 2);
 
         addCreeper(tag(BiomeTags.IS_TAIGA), ModEntities.SPRUCE_CREEPER);
-        addCreeper(tag(BiomeTags.IS_TAIGA), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.IS_TAIGA), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.IS_MOUNTAIN).and(Predicate.not(isSnowing())), ModEntities.HILLS_CREEPER);
-        addCreeper(tag(BiomeTags.IS_MOUNTAIN), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.IS_MOUNTAIN), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(IS_CAVE), ModEntities.DRIPSTONE_CREEPER);
-        addCreeper(tag(IS_CAVE), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(IS_CAVE), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.IS_JUNGLE), ModEntities.BAMBOO_CREEPER);
         addCreeper(tag(BiomeTags.IS_JUNGLE), ModEntities.JUNGLE_CREEPER);
-        addCreeper(tag(BiomeTags.IS_JUNGLE), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.IS_JUNGLE), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(BiomeTags.HAS_RUINED_PORTAL_SWAMP), ModEntities.SWAMP_CREEPER);
-        addCreeper(tag(BiomeTags.HAS_RUINED_PORTAL_SWAMP), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(BiomeTags.HAS_RUINED_PORTAL_SWAMP), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(IS_DARKFOREST), ModEntities.DARK_OAK_CREEPER);
-        addCreeper(tag(IS_DARKFOREST), ModEntities.CAVE_CREEPER);
+        addCreeper(tag(IS_DARKFOREST), ModEntities.CAVE_CREEPER, 50);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.LUKEWARM_OCEAN, Biomes.WARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN), ModEntities.OCEAN_CREEPER.get().getCategory(), ModEntities.OCEAN_CREEPER.get(), 2, 1, 1);
-        addCreeper(BiomeSelectors.includeByKey(Biomes.LUKEWARM_OCEAN, Biomes.WARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN), ModEntities.CAVE_CREEPER);
+        addCreeper(BiomeSelectors.includeByKey(Biomes.LUKEWARM_OCEAN, Biomes.WARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN), ModEntities.CAVE_CREEPER, 50);
     }
 
     public void removeCreepers() {

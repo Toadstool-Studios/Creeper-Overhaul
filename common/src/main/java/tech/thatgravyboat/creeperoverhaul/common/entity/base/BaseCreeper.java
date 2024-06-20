@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -34,6 +35,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -295,7 +297,7 @@ public class BaseCreeper extends Creeper implements GeoEntity {
 
     @Override
     public double getAttributeValue(@NotNull Attribute attribute) {
-        return super.getAttributeValue(attribute) * (attribute.equals(Attributes.ATTACK_DAMAGE) && isPowered() ? 10 : 1);
+        return super.getAttributeValue(attribute) * (attribute.equals(Attributes.ATTACK_DAMAGE) && isPowered() ? 3 : 1);
     }
 
     @Override
@@ -336,6 +338,14 @@ public class BaseCreeper extends Creeper implements GeoEntity {
     public boolean isDamageSourceBlocked(@NotNull DamageSource source) {
         return super.isDamageSourceBlocked(source) || type.immunities().contains(source);
     }
+
+    @Override
+    protected @NotNull AABB getAttackBoundingBox() {
+        AttributeInstance reachAttribute = this.getAttribute(PlatformUtils.getModAttribute("reach_distance"));
+        double reach = reachAttribute != null ? reachAttribute.getValue() : 0;
+        return super.getAttackBoundingBox().inflate(reach, 0, reach);
+    }
+
     //endregion
 
     //region Sounds

@@ -1,11 +1,9 @@
 package tech.thatgravyboat.creeperoverhaul.common.entity.goals;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import org.jetbrains.annotations.NotNull;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
-import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 
 public class CreeperMeleeAttackGoal extends MeleeAttackGoal {
 
@@ -17,13 +15,12 @@ public class CreeperMeleeAttackGoal extends MeleeAttackGoal {
     }
 
     @Override
-    protected void checkAndPerformAttack(@NotNull LivingEntity enemy, double pDistToEnemySqr) {
-        double d0 = this.getAttackReachSqr(enemy);
-        if (pDistToEnemySqr <= d0 && this.isTimeToAttack()) {
+    protected void checkAndPerformAttack(@NotNull LivingEntity enemy) {
+        if (this.mob.isWithinMeleeAttackRange(enemy) && this.isTimeToAttack()) {
             this.resetAttackCooldown();
             this.creeper.type.getHitSound(this.creeper).ifPresent(s -> this.creeper.level().playSound(null, this.creeper, s, this.creeper.getSoundSource(), 0.5F, 1.0F));
             this.mob.doHurtTarget(enemy);
-        } else if (pDistToEnemySqr <= d0) {
+        } else if (this.mob.isWithinMeleeAttackRange(enemy)) {
             creeper.setAttacking(true);
         } else {
             this.resetAttackCooldown();
@@ -39,11 +36,5 @@ public class CreeperMeleeAttackGoal extends MeleeAttackGoal {
     public void stop() {
         creeper.setAttacking(false);
         super.stop();
-    }
-
-    @Override
-    protected double getAttackReachSqr(@NotNull LivingEntity target) {
-        AttributeInstance attribute = this.creeper.getAttribute(PlatformUtils.getModAttribute("reach_distance"));
-        return super.getAttackReachSqr(target) + (attribute != null ? attribute.getValue() : 0);
     }
 }

@@ -1,32 +1,28 @@
 package tech.thatgravyboat.creeperoverhaul;
 
-import com.teamresourceful.resourcefulconfig.common.config.Configurator;
+import com.teamresourceful.resourcefulconfig.api.loader.Configurator;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import software.bernie.geckolib.GeckoLib;
 import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.CreeperTypes;
-import tech.thatgravyboat.creeperoverhaul.common.registry.ModBlocks;
-import tech.thatgravyboat.creeperoverhaul.common.registry.ModEntities;
-import tech.thatgravyboat.creeperoverhaul.common.registry.ModItems;
-import tech.thatgravyboat.creeperoverhaul.common.registry.ModSounds;
+import tech.thatgravyboat.creeperoverhaul.common.registry.*;
 import tech.thatgravyboat.creeperoverhaul.common.utils.Events;
 
 import java.util.Map;
 
 public class Creepers {
 
-    public static final Configurator CONFIGURATOR = new Configurator();
-
     public static final String MODID = "creeperoverhaul";
     public static final Events EVENT = Events.getCurrentEvent();
+    public static final Configurator CONFIGURATOR = new Configurator(MODID);
 
     public static void init() {
-        CONFIGURATOR.registerConfig(CreepersConfig.class);
-        GeckoLib.initialize();
+        CONFIGURATOR.register(CreepersConfig.class);
         ModBlocks.BLOCKS.init();
         ModEntities.ENTITIES.init();
+        ModCreativeTabs.CREATIVE_TABS.init();
         ModItems.ITEMS.init();
         ModSounds.SOUNDS.init();
     }

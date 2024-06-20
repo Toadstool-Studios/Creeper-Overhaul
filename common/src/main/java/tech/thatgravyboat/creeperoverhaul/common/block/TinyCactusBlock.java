@@ -1,5 +1,6 @@
 package tech.thatgravyboat.creeperoverhaul.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class TinyCactusBlock extends BushBlock implements Equipable {
 
     private static final VoxelShape SHAPE = Block.box(6, 0, 6, 10, 4, 10);
+    private static final MapCodec<TinyCactusBlock> CODEC = MapCodec.unit(TinyCactusBlock::new);
 
     public TinyCactusBlock() {
         super(Properties.of().strength(0.4F).sound(SoundType.WOOL).dynamicShape().offsetType(OffsetType.XZ));
@@ -30,12 +32,17 @@ public class TinyCactusBlock extends BushBlock implements Equipable {
     }
 
     @Override
+    protected @NotNull MapCodec<? extends BushBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
     protected boolean mayPlaceOn(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
         return state.is(BlockTags.SAND) || state.is(Blocks.CACTUS) || state.is(BlockTags.TERRACOTTA) || state.is(BlockTags.DIRT);
     }
 
     @Override
-    public EquipmentSlot getEquipmentSlot() {
+    public @NotNull EquipmentSlot getEquipmentSlot() {
         return EquipmentSlot.HEAD;
     }
 }
