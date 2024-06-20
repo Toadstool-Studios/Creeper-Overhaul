@@ -9,6 +9,8 @@ pluginManagement {
     }
 }
 
+rootProject.name = "Creeperoverhaul"
+
 include("common")
 include("fabric")
 include("neoforge")
