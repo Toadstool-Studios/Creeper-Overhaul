@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#forge:is_snowy",
+  "biomes": "#c:is_snowy",
   "spawners" : {
     "type": "creeperoverhaul:snowy_creeper",
     "weight": 75,

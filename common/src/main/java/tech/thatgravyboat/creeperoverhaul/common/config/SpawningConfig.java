@@ -136,4 +136,12 @@ public final class SpawningConfig {
     @Comment("Change the Ocean Creeper to spawn or not.")
     public static boolean allowOceanCreeperSpawning = true;
 
+    @ConfigEntry(
+            type = EntryType.BOOLEAN,
+            id = "allowBirchCreeperSpawning",
+            translation = "Allow Birch Creeper Spawning"
+    )
+    @Comment("Change the Birch Creeper to spawn or not.")
+    public static boolean allowBirchCreeperSpawning = true;
+
 }

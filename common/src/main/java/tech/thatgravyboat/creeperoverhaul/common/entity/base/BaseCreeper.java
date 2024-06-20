@@ -1,10 +1,12 @@
 package tech.thatgravyboat.creeperoverhaul.common.entity.base;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,10 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -37,14 +36,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationProcessor;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import tech.thatgravyboat.creeperoverhaul.api.PluginRegistry;
 import tech.thatgravyboat.creeperoverhaul.common.entity.goals.CreeperAvoidEntitiesGoal;
@@ -115,10 +111,10 @@ public class BaseCreeper extends Creeper implements GeoEntity {
 
     //region State Management
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(DATA_IS_ATTACKING, false);
-        this.getEntityData().define(DATA_IS_SHEARED, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_IS_ATTACKING, false);
+        builder.define(DATA_IS_SHEARED, false);
     }
 
     public boolean isAttacking() {
@@ -269,11 +265,12 @@ public class BaseCreeper extends Creeper implements GeoEntity {
     @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
         if (isExplodingCreeper() && PlatformUtils.isFlintAndSteel(stack)) {
             this.level().playSound(player, this.blockPosition(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
             if (!this.level().isClientSide()) {
                 ignite();
-                stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                stack.hurtAndBreak(1, player, slot);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
@@ -281,7 +278,7 @@ public class BaseCreeper extends Creeper implements GeoEntity {
             this.level().playSound(player, this.blockPosition(), SoundEvents.SNOW_GOLEM_SHEAR, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
             if (!this.level().isClientSide()) {
                 this.entityData.set(DATA_IS_SHEARED, true);
-                stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                stack.hurtAndBreak(1, player, slot);
                 this.spawnAtLocation(this.type.shearDrop().get(), 1.7F);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
@@ -296,32 +293,29 @@ public class BaseCreeper extends Creeper implements GeoEntity {
     }
 
     @Override
-    public double getAttributeValue(@NotNull Attribute attribute) {
-        return super.getAttributeValue(attribute) * (attribute.equals(Attributes.ATTACK_DAMAGE) && isPowered() ? 3 : 1);
+    public double getAttributeValue(Holder<Attribute> attribute) {
+        return super.getAttributeValue(attribute) * (attribute.equals(Attributes.ATTACK_DAMAGE) && isPowered() ? 2 : 1);
     }
 
     @Override
     public boolean doHurtTarget(@NotNull Entity entity) {
         if (canSwell()) return true;
-        double damage = this.getAttributeValue(Attributes.ATTACK_DAMAGE);
-        double knockback = this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-        if (entity instanceof LivingEntity livingEntity) {
-            damage += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), livingEntity.getMobType());
-            knockback += EnchantmentHelper.getKnockbackBonus(this);
+        DamageSource damageSource = level().damageSources().mobAttack(this);
+        float damage = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        if (level() instanceof ServerLevel serverLevel) {
+            damage = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, damage);
         }
 
-        int fireAspect = EnchantmentHelper.getFireAspect(this);
-        if (fireAspect > 0) {
-            entity.setSecondsOnFire(fireAspect * 4);
-        }
-
-        if (entity.hurt(level().damageSources().mobAttack(this), (float) damage)) {
+        if (entity.hurt(damageSource, damage)) {
+            float knockback = getKnockback(entity, damageSource);
             if (knockback > 0.0 && entity instanceof LivingEntity living) {
                 living.knockback(knockback * 0.5F, Mth.sin(this.getYRot() * 0.017453292F), -Mth.cos(this.getYRot() * 0.017453292F));
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
             }
 
-            this.doEnchantDamageEffects(this, entity);
+            if (level() instanceof ServerLevel serverLevel) {
+                EnchantmentHelper.doPostAttackEffects(serverLevel, entity, damageSource);
+            }
             this.setLastHurtMob(entity);
             return true;
         }
@@ -341,7 +335,7 @@ public class BaseCreeper extends Creeper implements GeoEntity {
 
     @Override
     protected @NotNull AABB getAttackBoundingBox() {
-        AttributeInstance reachAttribute = this.getAttribute(PlatformUtils.getModAttribute("reach_distance"));
+        AttributeInstance reachAttribute = this.getAttribute(Attributes.ENTITY_INTERACTION_RANGE);
         double reach = reachAttribute != null ? reachAttribute.getValue() : 0;
         return super.getAttackBoundingBox().inflate(reach, 0, reach);
     }

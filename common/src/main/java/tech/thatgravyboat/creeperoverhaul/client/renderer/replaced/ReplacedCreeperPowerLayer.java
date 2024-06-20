@@ -16,7 +16,7 @@ import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 
 public class ReplacedCreeperPowerLayer extends GeoRenderLayer<ReplacedCreeper> {
 
-    private static final ResourceLocation PLAINS_CHARGED_TEXTURE = new ResourceLocation(Creepers.MODID, "textures/entity/armor/creeper_armor.png");
+    private static final ResourceLocation PLAINS_CHARGED_TEXTURE = Creepers.id("textures/entity/armor/creeper_armor.png");
 
     private final ReplacedCreeperRenderer renderer;
 
@@ -43,7 +43,7 @@ public class ReplacedCreeperPowerLayer extends GeoRenderLayer<ReplacedCreeper> {
                     type, armorConsumer,
                     partialTick,
                     packedLight, OverlayTexture.NO_OVERLAY,
-                    1f, 1f, 1f, 1f
+                    0xFFFFFFFF
             );
         }
     }

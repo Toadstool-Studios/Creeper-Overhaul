@@ -1,16 +1,6 @@
 {
-  "blend": {
-    "func": "add",
-    "srcrgb": "srcalpha",
-    "dstrgb": "1-srcalpha"
-  },
   "vertex": "creeperoverhaul:rendertype_energy_swirl",
   "fragment": "creeperoverhaul:rendertype_energy_swirl",
-  "attributes": [
-    "Position",
-    "Color",
-    "UV0"
-  ],
   "samplers": [
     { "name": "Sampler0" }
   ],

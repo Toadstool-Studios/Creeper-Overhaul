@@ -1,6 +1,6 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils.fabric;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
@@ -29,11 +29,10 @@ public class PlatformUtilsImpl {
         return stack.getItem() instanceof FlintAndSteelItem;
     }
 
-    public static Attribute getModAttribute(String name) {
-        return switch (name) {
-            case "swim_speed" -> FabricAttributes.SWIM_SPEED;
-            case "reach_distance" -> FabricAttributes.REACH_DISTANCE;
-            default -> null;
-        };
+    public static Holder<Attribute> getModAttribute(String name) {
+        if ("swim_speed".equals(name)) {
+            return FabricAttributes.getSwimSpeed();
+        }
+        return null;
     }
 }

@@ -1,18 +1,16 @@
 package tech.thatgravyboat.creeperoverhaul.common.registry;
 
 import com.teamresourceful.resourcefullib.common.exceptions.NotImplementedException;
-import com.teamresourceful.resourcefullib.common.item.tabs.ResourcefulCreativeTab;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
-import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 
 import java.util.function.Supplier;
 
@@ -64,6 +62,9 @@ public class ModItems {
 
     public static final Supplier<SpawnEggItem> OCEAN_SPAWN_EGG = ITEMS.register("ocean_creeper_spawn_egg", () -> createSpawnEgg(
             ModEntities.OCEAN_CREEPER, 0x84D89E, 0xEFA662, new Item.Properties()));
+
+    public static final Supplier<SpawnEggItem> BIRCH_SPAWN_EGG = ITEMS.register("birch_creeper_spawn_egg", () -> createSpawnEgg(
+            ModEntities.BIRCH_CREEPER, 0xE1D6C9, 0x36342A, new Item.Properties()));
 
     public static final Supplier<Item> TINY_CACTUS =  ITEMS.register("tiny_cactus", () -> new BlockItem(ModBlocks.TINY_CACTUS.get(), new Item.Properties()));
 

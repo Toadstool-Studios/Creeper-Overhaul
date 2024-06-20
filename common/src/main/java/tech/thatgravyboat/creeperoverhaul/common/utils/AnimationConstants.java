@@ -1,6 +1,6 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils;
 
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.animation.RawAnimation;
 
 public final class AnimationConstants {
 

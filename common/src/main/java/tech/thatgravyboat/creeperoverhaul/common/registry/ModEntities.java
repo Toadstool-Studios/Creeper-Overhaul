@@ -77,4 +77,8 @@ public class ModEntities {
     public static final Supplier<EntityType<PufferfishCreeper>> OCEAN_CREEPER = ENTITIES.register("ocean_creeper",
             () -> EntityType.Builder.of(PufferfishCreeper.ofPufferfish(CreeperTypes.OCEAN), MobCategory.MONSTER).sized(0.7F, 1.7F)
                     .clientTrackingRange(8).build("ocean_creeper"));
+
+    public static final Supplier<EntityType<BaseCreeper>> BIRCH_CREEPER = ENTITIES.register("birch_creeper",
+            () -> EntityType.Builder.of(BaseCreeper.of(CreeperTypes.BIRCH), MobCategory.MONSTER).sized(0.6F, 1.7F)
+                    .clientTrackingRange(8).build("birch_creeper"));
 }

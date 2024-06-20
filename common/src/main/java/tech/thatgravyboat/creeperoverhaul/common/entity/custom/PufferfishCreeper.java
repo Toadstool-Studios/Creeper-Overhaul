@@ -5,6 +5,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -29,7 +30,7 @@ public class PufferfishCreeper extends WaterCreeper {
 
     private static final TargetingConditions TARGETS = TargetingConditions.forNonCombat().ignoreInvisibilityTesting()
             .ignoreLineOfSight()
-            .selector((entity) -> entity.getMobType() != MobType.WATER && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity) && entity.isAlive());
+            .selector((entity) -> !entity.getType().is(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity) && entity.isAlive());
 
     private static final List<EntityDimensions> DIMENSIONS = List.of(
             EntityDimensions.scalable(0.6875f, 1.125f),
@@ -53,9 +54,9 @@ public class PufferfishCreeper extends WaterCreeper {
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType type, @Nullable SpawnGroupData group, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType type, @Nullable SpawnGroupData data) {
         setVariant(level.getRandom().nextBoolean() ? Variant.TEAL : Variant.BROWN);
-        return super.finalizeSpawn(level, difficulty, type, group, tag);
+        return super.finalizeSpawn(level, difficulty, type, data);
     }
 
     @Override
@@ -73,11 +74,12 @@ public class PufferfishCreeper extends WaterCreeper {
     }
 
     //region Data
+
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, (byte) 0);
-        this.entityData.define(PUFF_STATE, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VARIANT, (byte) 0);
+        builder.define(PUFF_STATE, (byte) 0);
     }
 
     @Override
@@ -177,7 +179,7 @@ public class PufferfishCreeper extends WaterCreeper {
     }
 
     @Override
-    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+    public @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
         return DIMENSIONS.get(this.getPuffId() - 1);
     }
 

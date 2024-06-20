@@ -1,8 +1,8 @@
 package tech.thatgravyboat.creeperoverhaul.client.renderer.normal;
 
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;

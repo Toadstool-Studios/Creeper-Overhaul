@@ -31,7 +31,7 @@ public class PlatformUtilsImpl {
     }
 
     public static Level.ExplosionInteraction getInteractionForCreeper(BaseCreeper creeper) {
-        boolean destroyBlocks = EventHooks.getMobGriefingEvent(creeper.level(), creeper) && CreepersConfig.destroyBlocks;
+        boolean destroyBlocks = EventHooks.canEntityGrief(creeper.level(), creeper) && CreepersConfig.destroyBlocks;
         return destroyBlocks ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
     }
 
@@ -44,10 +44,9 @@ public class PlatformUtilsImpl {
     }
 
     public static Attribute getModAttribute(String name) {
-        return switch (name) {
-            case "swim_speed" -> NeoForgeMod.SWIM_SPEED.value();
-            case "reach_distance" -> NeoForgeMod.ENTITY_REACH.value();
-            default -> null;
-        };
+        if ("swim_speed".equals(name)) {
+            return NeoForgeMod.SWIM_SPEED.value();
+        }
+        return null;
     }
 }

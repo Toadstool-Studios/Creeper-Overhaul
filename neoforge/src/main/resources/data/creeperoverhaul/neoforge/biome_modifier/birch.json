@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#c:is_birch_forest",
+  "spawners" : {
+    "type": "creeperoverhaul:birch_creeper",
+    "weight": 75,
+    "minCount": 2,
+    "maxCount": 2
+  }
+}

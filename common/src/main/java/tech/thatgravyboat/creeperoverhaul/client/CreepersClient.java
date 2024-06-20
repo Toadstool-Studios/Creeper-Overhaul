@@ -41,6 +41,7 @@ public class CreepersClient {
         registerRenderer(ModEntities.BEACH_CREEPER, createRenderer(CreeperTypes.BEACH));
         registerRenderer(ModEntities.SNOWY_CREEPER, createRenderer(CreeperTypes.SNOWY));
         registerRenderer(ModEntities.OCEAN_CREEPER, createRenderer(CreeperTypes.OCEAN));
+        registerRenderer(ModEntities.BIRCH_CREEPER, createRenderer(CreeperTypes.BIRCH));
         if (ClientConfig.replaceDefaultCreeper) {
             registerRenderer(EntityType.CREEPER, ReplacedCreeperRenderer::new);
         }

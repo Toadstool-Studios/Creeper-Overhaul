@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#minecraft:has_structure/desert_pyramid",
+  "biomes": "#c:is_desert",
   "spawners" : {
     "type": "creeperoverhaul:desert_creeper",
     "weight": 75,

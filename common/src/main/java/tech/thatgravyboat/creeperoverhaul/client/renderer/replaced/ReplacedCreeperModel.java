@@ -6,35 +6,30 @@ import tech.thatgravyboat.creeperoverhaul.Creepers;
 import tech.thatgravyboat.creeperoverhaul.common.entity.ReplacedCreeper;
 import tech.thatgravyboat.creeperoverhaul.common.utils.Events;
 
+import java.util.Locale;
+
 public class ReplacedCreeperModel<E extends ReplacedCreeper> extends GeoModel<E> {
 
-    private static final ResourceLocation MODEL = new ResourceLocation(Creepers.MODID, "geo/plains.geo.json");
-    private static final ResourceLocation APRIL_MODEL = new ResourceLocation(Creepers.MODID, "geo/april_fools_creeper.geo.json");
-    private static final ResourceLocation ANIMATION = new ResourceLocation(Creepers.MODID, "animations/creeper.animation.json");
-
-    private static final ResourceLocation NORMAL = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper.png");
-    private static final ResourceLocation CHRISTMAS = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper_christmas.png");
-    private static final ResourceLocation HALLOWEEN = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper_halloween.png");
-    private static final ResourceLocation ST_PATRICKS = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper_stpatricksday.png");
-    private static final ResourceLocation APRIL_FOOLS = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper_aprilfools.png");
+    private static final ResourceLocation ANIMATION = Creepers.id("animations/creeper.animation.json");
 
     @Override
     public ResourceLocation getModelResource(ReplacedCreeper object) {
-        if (Creepers.EVENT == Events.APRIL_FOOLS) {
-            return APRIL_MODEL;
+        if (Creepers.EVENT == Events.NONE) {
+            return Creepers.id("geo/plains.geo.json");
+        } else {
+            String id = Creepers.EVENT.name().toLowerCase(Locale.ROOT);
+            return Creepers.id("geo/events/" + id + ".geo.json");
         }
-        return MODEL;
     }
 
     @Override
     public ResourceLocation getTextureResource(ReplacedCreeper object) {
-        return switch (Creepers.EVENT) {
-            case CHRISTMAS -> CHRISTMAS;
-            case HALLOWEEN -> HALLOWEEN;
-            case ST_PATRICKS_DAY -> ST_PATRICKS;
-            case APRIL_FOOLS -> APRIL_FOOLS;
-            case NONE -> NORMAL;
-        };
+        if (Creepers.EVENT == Events.NONE) {
+            return Creepers.id("textures/entity/plains/plains_creeper.png");
+        } else {
+            String id = Creepers.EVENT.name().toLowerCase(Locale.ROOT);
+            return Creepers.id("textures/entity/events/" + id + ".png");
+        }
     }
 
     @Override

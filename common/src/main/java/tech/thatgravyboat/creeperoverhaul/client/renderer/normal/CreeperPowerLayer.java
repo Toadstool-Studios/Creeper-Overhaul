@@ -31,6 +31,7 @@ public class CreeperPowerLayer<E extends BaseCreeper> extends GeoRenderLayer<E> 
                 getDefaultBakedModel(creeper), poseStack, bufferSource, creeper,
                 type, armorConsumer,
                 partialTick, packedLight, OverlayTexture.NO_OVERLAY,
-                1f, 1f, 1f, 1f);
+                0xffffffff
+        );
     }
 }

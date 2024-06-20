@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.function.BooleanSupplier;
 
 public enum Events {
+    NEW_YEARS(() -> matchMonth(Calendar.JANUARY) && matchDays(1, 2)),
     CHRISTMAS(() -> matchMonth(Calendar.DECEMBER) && matchDays(20, 31)),
     HALLOWEEN(() -> matchMonth(Calendar.OCTOBER) && matchDays(25, 31)),
     ST_PATRICKS_DAY(() -> matchMonth(Calendar.MARCH) && matchDays(15, 19)),

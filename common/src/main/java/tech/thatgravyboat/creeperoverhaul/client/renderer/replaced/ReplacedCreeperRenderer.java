@@ -26,7 +26,7 @@ public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<Creeper, 
     }
 
     @Override
-    public void renderRecursively(PoseStack poseStack, ReplacedCreeper animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderRecursively(PoseStack poseStack, ReplacedCreeper animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int color) {
         boolean shouldRender = switch (bone.getName()) {
             case "Santa" -> Creepers.EVENT.equals(Events.CHRISTMAS);
             case "Witch" -> Creepers.EVENT.equals(Events.HALLOWEEN);
@@ -35,12 +35,12 @@ public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<Creeper, 
         };
 
         if (!shouldRender) return;
-        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, color);
     }
 
     @Override
-    public void preRender(PoseStack stack, ReplacedCreeper animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.preRender(stack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    public void preRender(PoseStack stack, ReplacedCreeper animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int color) {
+        super.preRender(stack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, color);
 
         float f = this.currentEntity.getSwelling(partialTick);
         float f1 = 1.0F + Mth.sin(f * 100.0F) * f * 0.01F;
@@ -53,7 +53,7 @@ public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<Creeper, 
 
     @Override
     public int getPackedOverlay(ReplacedCreeper animatable, float u, float partialTick) {
-        return super.getPackedOverlay(animatable, getSwellOverlay(this.currentEntity, partialTick));
+        return super.getPackedOverlay(animatable, getSwellOverlay(this.currentEntity, partialTick), partialTick);
     }
 
     protected float getSwellOverlay(Creeper creeper, float partialTicks) {

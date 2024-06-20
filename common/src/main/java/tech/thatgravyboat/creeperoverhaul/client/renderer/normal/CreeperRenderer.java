@@ -38,16 +38,18 @@ public class CreeperRenderer<E extends BaseCreeper> extends GeoEntityRenderer<E>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(@NotNull E entity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull E entity) {
         return this.model.getTextureResource(entity);
     }
 
     @Override
-    public void reRender(BakedGeoModel model, PoseStack poseStack, MultiBufferSource bufferSource, E animatable, RenderType renderType, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void reRender(BakedGeoModel model, PoseStack poseStack, MultiBufferSource bufferSource, E animatable, RenderType renderType, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay, int color) {
         float f = animatable.getSwelling(partialTick);
         f = (int) (f * 10.0F) % 2 == 0 ? 0.0F : Mth.clamp(f, 0.5F, 1.0F);
-        super.reRender(model, poseStack, bufferSource, animatable, renderType, buffer, partialTick,
-                packedLight, getOverlayCoords(animatable, f), red, green, blue, alpha);
+        super.reRender(
+                model, poseStack, bufferSource, animatable, renderType, buffer, partialTick,
+                packedLight, getOverlayCoords(animatable, f), color
+        );
     }
 
     @Override

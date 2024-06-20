@@ -1,6 +1,7 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,7 +35,7 @@ public class PlatformUtils {
 
     @Nullable
     @ExpectPlatform
-    public static Attribute getModAttribute(String name) {
+    public static Holder<Attribute> getModAttribute(String name) {
         throw new AssertionError();
     }
 }

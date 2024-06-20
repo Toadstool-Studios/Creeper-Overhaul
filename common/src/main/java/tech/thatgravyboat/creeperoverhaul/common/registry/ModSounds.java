@@ -3,7 +3,6 @@ package tech.thatgravyboat.creeperoverhaul.common.registry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
 
@@ -42,6 +41,6 @@ public class ModSounds {
     public static final Supplier<SoundEvent> OCEAN_DEFLATE = registerSound("entity.ocean.creeper.deflate");
 
     private static Supplier<SoundEvent> registerSound(String id) {
-        return SOUNDS.register(id, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Creepers.MODID, id)));
+        return SOUNDS.register(id, () -> SoundEvent.createVariableRangeEvent(Creepers.id(id)));
     }
 }

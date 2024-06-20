@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#minecraft:has_structure/ruined_portal_swamp",
+  "biomes": "#c:is_swamp",
   "spawners" : {
     "type": "creeperoverhaul:swamp_creeper",
     "weight": 75,

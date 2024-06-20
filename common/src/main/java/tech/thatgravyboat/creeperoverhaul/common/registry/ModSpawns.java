@@ -1,15 +1,11 @@
 package tech.thatgravyboat.creeperoverhaul.common.registry;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -24,22 +20,23 @@ import java.util.function.Supplier;
 
 public class ModSpawns {
 
-    public static void addSpawnRules() {
-        register(ModEntities.JUNGLE_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, getPredicate(CreeperTypes.JUNGLE, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.BAMBOO_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, getPredicate(CreeperTypes.BAMBOO, ModSpawns::checkDayMonsterSpawnRulesAbove));
-        register(ModEntities.DESERT_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.DESERT, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.BADLANDS_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.BADLANDS, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.HILLS_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.HILLS, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.SAVANNAH_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SAVANNAH, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.MUSHROOM_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.MUSHROOM, ModSpawns::checkDayMonsterSpawnRulesAbove));
-        register(ModEntities.SWAMP_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SWAMP, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.DRIPSTONE_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.DRIPSTONE, ModSpawns::checkMonsterSpawnRulesCave));
-        register(ModEntities.CAVE_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.CAVE, ModSpawns::checkMonsterSpawnRulesCave));
-        register(ModEntities.DARK_OAK_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.DARK_OAK, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.SPRUCE_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SPRUCE, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.BEACH_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.BEACH, ModSpawns::checkMonsterSpawnRulesAbove));
-        register(ModEntities.SNOWY_CREEPER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SNOWY, ModSpawns::checkDayMonsterSpawnRulesAbove));
-        register(ModEntities.OCEAN_CREEPER, SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.OCEAN, ModSpawns::checkWaterSpawnRules));
+    public static void addSpawnRules(Registrar registrar) {
+        registrar.register(ModEntities.JUNGLE_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, getPredicate(CreeperTypes.JUNGLE, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.BAMBOO_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, getPredicate(CreeperTypes.BAMBOO, ModSpawns::checkDayMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.DESERT_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.DESERT, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.BADLANDS_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.BADLANDS, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.HILLS_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.HILLS, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.SAVANNAH_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SAVANNAH, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.MUSHROOM_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.MUSHROOM, ModSpawns::checkDayMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.SWAMP_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SWAMP, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.DRIPSTONE_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.DRIPSTONE, ModSpawns::checkMonsterSpawnRulesCave));
+        registrar.register(ModEntities.CAVE_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.CAVE, ModSpawns::checkMonsterSpawnRulesCave));
+        registrar.register(ModEntities.DARK_OAK_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.DARK_OAK, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.SPRUCE_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SPRUCE, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.BEACH_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.BEACH, ModSpawns::checkMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.SNOWY_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.SNOWY, ModSpawns::checkDayMonsterSpawnRulesAbove));
+        registrar.register(ModEntities.OCEAN_CREEPER, SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.OCEAN, ModSpawns::checkWaterSpawnRules));
+        registrar.register(ModEntities.BIRCH_CREEPER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, getPredicate(CreeperTypes.BIRCH, ModSpawns::checkMonsterSpawnRulesAbove));
     }
 
     public static <T extends Mob> SpawnPlacements.SpawnPredicate<T> getPredicate(CreeperType creeper, SpawnPlacements.SpawnPredicate<T> predicate) {
@@ -67,9 +64,7 @@ public class ModSpawns {
                 (isGrassLike || state.getBlock() instanceof LeavesBlock);
     }
 
-
-    @ExpectPlatform
-    public static <T extends Mob> void register(Supplier<EntityType<T>> entityType, SpawnPlacements.Type type, Heightmap.Types types, SpawnPlacements.SpawnPredicate<T> spawnPredicate) {
-
+    public interface Registrar {
+        <T extends Mob> void register(Supplier<EntityType<T>> entityType, SpawnPlacementType type, Heightmap.Types types, SpawnPlacements.SpawnPredicate<T> spawnPredicate);
     }
 }

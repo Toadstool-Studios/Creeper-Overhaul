@@ -1,12 +1,14 @@
 package tech.thatgravyboat.creeperoverhaul;
 
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import software.bernie.geckolib.GeckoLib;
 import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.CreeperTypes;
+import tech.thatgravyboat.creeperoverhaul.common.entity.base.CreeperAttributeBuilder;
+import tech.thatgravyboat.creeperoverhaul.common.entity.base.CreeperType;
 import tech.thatgravyboat.creeperoverhaul.common.registry.*;
 import tech.thatgravyboat.creeperoverhaul.common.utils.Events;
 
@@ -28,20 +30,31 @@ public class Creepers {
     }
 
     public static void registerAttributes(Map<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> attributes) {
-        attributes.put(ModEntities.JUNGLE_CREEPER.get(), CreeperTypes.JUNGLE.attributes());
-        attributes.put(ModEntities.BAMBOO_CREEPER.get(), CreeperTypes.BAMBOO.attributes());
-        attributes.put(ModEntities.DESERT_CREEPER.get(), CreeperTypes.DESERT.attributes());
-        attributes.put(ModEntities.BADLANDS_CREEPER.get(), CreeperTypes.BADLANDS.attributes());
-        attributes.put(ModEntities.HILLS_CREEPER.get(), CreeperTypes.HILLS.attributes());
-        attributes.put(ModEntities.SAVANNAH_CREEPER.get(), CreeperTypes.SAVANNAH.attributes());
-        attributes.put(ModEntities.MUSHROOM_CREEPER.get(), CreeperTypes.MUSHROOM.attributes());
-        attributes.put(ModEntities.SWAMP_CREEPER.get(), CreeperTypes.SWAMP.attributes());
-        attributes.put(ModEntities.DRIPSTONE_CREEPER.get(), CreeperTypes.DRIPSTONE.attributes());
-        attributes.put(ModEntities.CAVE_CREEPER.get(), CreeperTypes.CAVE.attributes());
-        attributes.put(ModEntities.DARK_OAK_CREEPER.get(), CreeperTypes.DARK_OAK.attributes());
-        attributes.put(ModEntities.SPRUCE_CREEPER.get(), CreeperTypes.SPRUCE.attributes());
-        attributes.put(ModEntities.BEACH_CREEPER.get(), CreeperTypes.BEACH.attributes());
-        attributes.put(ModEntities.SNOWY_CREEPER.get(), CreeperTypes.SNOWY.attributes());
-        attributes.put(ModEntities.OCEAN_CREEPER.get(), CreeperTypes.OCEAN.attributes());
+        attributes.put(ModEntities.JUNGLE_CREEPER.get(), build(CreeperTypes.JUNGLE));
+        attributes.put(ModEntities.BAMBOO_CREEPER.get(), build(CreeperTypes.BAMBOO));
+        attributes.put(ModEntities.DESERT_CREEPER.get(), build(CreeperTypes.DESERT));
+        attributes.put(ModEntities.BADLANDS_CREEPER.get(), build(CreeperTypes.BADLANDS));
+        attributes.put(ModEntities.HILLS_CREEPER.get(), build(CreeperTypes.HILLS));
+        attributes.put(ModEntities.SAVANNAH_CREEPER.get(), build(CreeperTypes.SAVANNAH));
+        attributes.put(ModEntities.MUSHROOM_CREEPER.get(), build(CreeperTypes.MUSHROOM));
+        attributes.put(ModEntities.SWAMP_CREEPER.get(), build(CreeperTypes.SWAMP));
+        attributes.put(ModEntities.DRIPSTONE_CREEPER.get(), build(CreeperTypes.DRIPSTONE));
+        attributes.put(ModEntities.CAVE_CREEPER.get(), build(CreeperTypes.CAVE));
+        attributes.put(ModEntities.DARK_OAK_CREEPER.get(), build(CreeperTypes.DARK_OAK));
+        attributes.put(ModEntities.SPRUCE_CREEPER.get(), build(CreeperTypes.SPRUCE));
+        attributes.put(ModEntities.BEACH_CREEPER.get(), build(CreeperTypes.BEACH));
+        attributes.put(ModEntities.SNOWY_CREEPER.get(), build(CreeperTypes.SNOWY));
+        attributes.put(ModEntities.OCEAN_CREEPER.get(), build(CreeperTypes.OCEAN));
+        attributes.put(ModEntities.BIRCH_CREEPER.get(), build(CreeperTypes.BIRCH));
+    }
+
+    private static AttributeSupplier.Builder build(CreeperType type) {
+        CreeperAttributeBuilder builder = new CreeperAttributeBuilder();
+        type.attributes().accept(builder);
+        return builder.build();
+    }
+
+    public static ResourceLocation id(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

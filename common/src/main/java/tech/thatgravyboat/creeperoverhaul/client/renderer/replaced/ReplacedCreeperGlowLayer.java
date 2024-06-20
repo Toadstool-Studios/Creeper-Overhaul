@@ -16,8 +16,8 @@ import tech.thatgravyboat.creeperoverhaul.common.utils.Events;
 
 public class ReplacedCreeperGlowLayer extends GeoRenderLayer<ReplacedCreeper> {
 
-    private static final ResourceLocation PLAINS_GLOW_TEXTURE = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper_glow.png");
-    private static final ResourceLocation APRIL_GLOW_TEXTURE = new ResourceLocation(Creepers.MODID, "textures/entity/plains/plains_creeper_glow_aprilfools.png");
+    private static final ResourceLocation PLAINS_GLOW_TEXTURE = Creepers.id("textures/entity/plains/plains_creeper_glow.png");
+    private static final ResourceLocation APRIL_GLOW_TEXTURE = Creepers.id("textures/entity/plains/plains_creeper_glow_aprilfools.png");
 
     private final ReplacedCreeperRenderer renderer;
 
@@ -51,7 +51,7 @@ public class ReplacedCreeperGlowLayer extends GeoRenderLayer<ReplacedCreeper> {
                     RenderTypes.getTransparentEyes(texture), glowConsumer,
                     partialTick,
                     packedLight, OverlayTexture.NO_OVERLAY,
-                    1f, 1f, 1f, f
+                    0xFFFFFF | (int) (f * 240) << 24
             );
         }
     }

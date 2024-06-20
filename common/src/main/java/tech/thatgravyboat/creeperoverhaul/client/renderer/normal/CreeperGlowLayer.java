@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.Mth;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
@@ -31,7 +32,8 @@ public class CreeperGlowLayer<E extends BaseCreeper> extends GeoRenderLayer<E> {
             getRenderer().reRender(
                     getDefaultBakedModel(creeper), poseStack, bufferSource, creeper,
                     RenderTypes.getTransparentEyes(type.glowingTexture().apply(creeper)), glowConsumer,
-                    partialTick, packedLight, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, f);
+                    partialTick, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFF | Mth.ceil(f * 240) << 24
+            );
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#creeperoverhaul:is_mushroom",
+  "biomes": "#c:is_mushroom",
   "spawners" : {
     "type": "creeperoverhaul:mushroom_creeper",
     "weight": 10,

@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#creeperoverhaul:is_cave",
+  "biomes": "#c:is_cave",
   "spawners" : {
     "type": "creeperoverhaul:dripstone_creeper",
     "weight": 75,

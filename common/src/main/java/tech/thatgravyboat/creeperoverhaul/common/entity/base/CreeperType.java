@@ -8,18 +8,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 
 import java.util.*;
-import java.util.function.BooleanSupplier;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public record CreeperType(
         Function<BaseCreeper, ResourceLocation> texture,
@@ -35,7 +28,7 @@ public record CreeperType(
         Collection<MobEffectInstance> potionsWhenDead,
         Collection<Class<? extends LivingEntity>> entities,
         Collection<DamageSource> immunities,
-        AttributeSupplier.Builder attributes,
+        Consumer<CreeperAttributeBuilder> attributes,
         Supplier<ItemStack> shearDrop,
 
         Function<BaseCreeper, SoundEvent> deathSound,
@@ -96,9 +89,7 @@ public record CreeperType(
         private final List<Class<? extends LivingEntity>> attackingEntities = new ArrayList<>();
         private final List<DamageSource> immunities = new ArrayList<>();
         private final Map<Predicate<BlockState>, Function<RandomSource, BlockState>> replacer = new HashMap<>();
-        private final AttributeSupplier.Builder attributes = Creeper.createAttributes()
-                .add(PlatformUtils.getModAttribute("reach_distance"), 0)
-                .add(PlatformUtils.getModAttribute("swim_speed"));
+        private Consumer<CreeperAttributeBuilder> attributes = builder -> {};
         private Supplier<ItemStack> shearable = null;
 
         private Function<BaseCreeper, SoundEvent> deathSound = creeper -> SoundEvents.CREEPER_DEATH;
@@ -201,16 +192,8 @@ public record CreeperType(
             return this;
         }
 
-        public Builder addAttribute(String attribute, double value) {
-            Attribute modAttribute = PlatformUtils.getModAttribute(attribute);
-            if (modAttribute == null) {
-                throw new IllegalArgumentException("Mod Attribute " + attribute + " does not exist");
-            }
-            this.attributes.add(modAttribute, value);
-            return this;
-        }
-        public Builder addAttribute(Attribute attribute, double value) {
-            this.attributes.add(attribute, value);
+        public Builder addAttributes(Consumer<CreeperAttributeBuilder> builder) {
+            this.attributes = builder;
             return this;
         }
 

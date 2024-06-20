@@ -189,66 +189,6 @@
 					}
 				}
 			}
-		},
-		"animation.creeper.attack": {
-			"animation_length": 0.52,
-			"bones": {
-				"body": {
-					"rotation": {
-						"0.04": {
-							"vector": [0, 0, 0]
-						},
-						"0.12": {
-							"vector": [20, 0, 0]
-						},
-						"0.24": {
-							"vector": [22, 0, 0]
-						},
-						"0.36": {
-							"vector": [5, 0, 0]
-						},
-						"0.48": {
-							"vector": [0, 0, 0],
-							"easing": "easeInOutSine"
-						}
-					},
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.12": {
-							"vector": [0, -1, 0]
-						},
-						"0.24": {
-							"vector": [0, -0.5, -0.5]
-						},
-						"0.36": {
-							"vector": [0, 0, 0]
-						},
-						"0.48": {
-							"vector": [0, 0, 0],
-							"easing": "easeInOutSine"
-						}
-					}
-				},
-				"head": {
-					"rotation": {
-						"0.04": {
-							"vector": [0, 0, 0]
-						},
-						"0.16": {
-							"vector": [20, 0, 0]
-						},
-						"0.28": {
-							"vector": [-7.5, 0, 0]
-						},
-						"0.52": {
-							"vector": [0, 0, 0],
-							"easing": "easeInOutSine"
-						}
-					}
-				}
-			}
 		}
 	},
 	"geckolib_format_version": 2

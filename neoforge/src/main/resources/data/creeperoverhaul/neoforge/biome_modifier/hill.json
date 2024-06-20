@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#minecraft:is_hill",
+  "biomes": "#c:is_hill",
   "spawners" : {
     "type": "creeperoverhaul:hills_creeper",
     "weight": 75,

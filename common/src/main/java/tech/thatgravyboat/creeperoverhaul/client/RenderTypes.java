@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class RenderTypes extends RenderType {
 
     private static ShaderInstance energySwirlShader;
-    public static final ResourceLocation ENERGY_SWIRL_RENDERTYPE = new ResourceLocation(Creepers.MODID, "rendertype_energy_swirl");
+    public static final ResourceLocation ENERGY_SWIRL_RENDERTYPE = Creepers.id("rendertype_energy_swirl");
     private static final ShaderStateShard ENERGY_SWIRL_SHARD = new ShaderStateShard(() -> energySwirlShader);
 
     public RenderTypes(String string, VertexFormat vertexFormat, VertexFormat.Mode mode, int i, boolean bl, boolean bl2, Runnable runnable, Runnable runnable2) {

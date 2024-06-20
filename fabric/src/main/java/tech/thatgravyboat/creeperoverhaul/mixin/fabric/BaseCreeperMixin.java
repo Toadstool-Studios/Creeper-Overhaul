@@ -21,19 +21,19 @@ public abstract class BaseCreeperMixin extends LivingEntity {
 
     @Override
     protected void goDownInWater() {
-        this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D * this.getAttributeValue(FabricAttributes.SWIM_SPEED), 0.0D));
+        this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D * this.getAttributeValue(FabricAttributes.getSwimSpeed()), 0.0D));
     }
 
     @Override
     protected void jumpInLiquid(@NotNull TagKey<Fluid> fluid) {
-        this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D * this.getAttributeValue(FabricAttributes.SWIM_SPEED), 0.0D));
+        this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D * this.getAttributeValue(FabricAttributes.getSwimSpeed()), 0.0D));
     }
 
     @Override
     public void moveRelative(float speed, @NotNull Vec3 movementInput) {
         FluidState fluidState = this.level().getFluidState(this.blockPosition());
         if (this.isInWater() && this.isAffectedByFluids() && !this.canStandOnFluid(fluidState)){
-            super.moveRelative(speed * (float)this.getAttributeValue(FabricAttributes.SWIM_SPEED), movementInput);
+            super.moveRelative(speed * (float)this.getAttributeValue(FabricAttributes.getSwimSpeed()), movementInput);
             return;
         }
         super.moveRelative(speed, movementInput);
