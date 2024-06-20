@@ -1,5 +1,6 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils.neoforge;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
@@ -43,9 +44,9 @@ public class PlatformUtilsImpl {
         return stack.getItem() instanceof FlintAndSteelItem || stack.canPerformAction(IGNITE);
     }
 
-    public static Attribute getModAttribute(String name) {
+    public static Holder<Attribute> getModAttribute(String name) {
         if ("swim_speed".equals(name)) {
-            return NeoForgeMod.SWIM_SPEED.value();
+            return NeoForgeMod.SWIM_SPEED;
         }
         return null;
     }

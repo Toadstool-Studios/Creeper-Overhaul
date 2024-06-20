@@ -1,6 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dev.architectury.plugin.ArchitectPluginExtension
-import groovy.json.StringEscapeUtils
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
 
@@ -27,14 +26,13 @@ subprojects {
     val modLoader = project.name
     val modId = rootProject.name
     val isCommon = modLoader == rootProject.projects.common.name
+    val loom: LoomGradleExtensionAPI by project
 
     base {
         archivesName.set("$modId-$modLoader-$minecraftVersion")
     }
 
-    configure<LoomGradleExtensionAPI> {
-        silentMojangMappingsLicense()
-    }
+    loom.silentMojangMappingsLicense()
 
     repositories {
         mavenCentral()
@@ -48,15 +46,7 @@ subprojects {
         val geckolibVersion: String by project
 
         "minecraft"("::$minecraftVersion")
-
-        @Suppress("UnstableApiUsage")
-        "mappings"(project.the<LoomGradleExtensionAPI>().layered {
-            val parchmentVersion: String by project
-
-            officialMojangMappings()
-
-            parchment(create(group = "org.parchmentmc.data", name = "parchment-1.20.3", version = parchmentVersion))
-        })
+        "mappings"(loom.officialMojangMappings())
 
         "modApi"(group = "com.teamresourceful.resourcefullib", name = "resourcefullib-$modLoader-$minecraftVersion", version = resourcefulLibVersion)
         "modApi"(group = "com.teamresourceful.resourcefulconfig", name = "resourcefulconfig-$modLoader-$minecraftVersion", version = resourcefulConfigVersion)
@@ -79,7 +69,7 @@ subprojects {
 
     tasks.processResources {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        filesMatching(listOf("META-INF/mods.toml", "fabric.mod.json")) {
+        filesMatching(listOf("META-INF/neoforge.mods.toml", "fabric.mod.json")) {
             expand("version" to project.version)
         }
     }
@@ -89,10 +79,7 @@ subprojects {
             platformSetupLoomIde()
         }
 
-        val shadowCommon by configurations.creating {
-            isCanBeConsumed = false
-            isCanBeResolved = true
-        }
+        val shadowCommon by configurations.creating
 
         tasks {
             "shadowJar"(ShadowJar::class) {
@@ -103,7 +90,12 @@ subprojects {
             "remapJar"(RemapJarTask::class) {
                 dependsOn("shadowJar")
                 inputFile.set(named<ShadowJar>("shadowJar").flatMap { it.archiveFile })
+                archiveClassifier.set(null as String?)
             }
+        }
+    } else {
+        tasks.named<RemapJarTask>("remapJar") {
+            archiveClassifier.set(null as String?)
         }
     }
 }

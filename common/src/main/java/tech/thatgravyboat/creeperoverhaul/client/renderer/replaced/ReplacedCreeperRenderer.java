@@ -11,11 +11,8 @@ import net.minecraft.world.entity.monster.Creeper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
-import tech.thatgravyboat.creeperoverhaul.Creepers;
 import tech.thatgravyboat.creeperoverhaul.common.entity.ReplacedCreeper;
-import tech.thatgravyboat.creeperoverhaul.common.utils.Events;
 
 public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<Creeper, ReplacedCreeper> {
 
@@ -23,19 +20,6 @@ public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<Creeper, 
         super(renderManager, new ReplacedCreeperModel<>(), new ReplacedCreeper());
         addRenderLayer(new ReplacedCreeperGlowLayer(this));
         addRenderLayer(new ReplacedCreeperPowerLayer(this));
-    }
-
-    @Override
-    public void renderRecursively(PoseStack poseStack, ReplacedCreeper animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int color) {
-        boolean shouldRender = switch (bone.getName()) {
-            case "Santa" -> Creepers.EVENT.equals(Events.CHRISTMAS);
-            case "Witch" -> Creepers.EVENT.equals(Events.HALLOWEEN);
-            case "Stpat" -> Creepers.EVENT.equals(Events.ST_PATRICKS_DAY);
-            default -> true;
-        };
-
-        if (!shouldRender) return;
-        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, color);
     }
 
     @Override
