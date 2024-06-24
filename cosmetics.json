@@ -1,0 +1,22 @@
+{
+	"cosmetics": {
+		":3": {
+			"texture": "https://femboy-hooters.net/u/C0s6XN.png",
+			"model": "https://femboy-hooters.net/r/zjSW5J.json",
+			"anchor": "HEAD"
+		},
+		"horns": {
+			"texture": "https://femboy-hooters.net/u/H3qd2O.png",
+			"model": "https://femboy-hooters.net/r/aQTMKm.json",
+			"anchor": "HEAD"
+		},
+		"mushroom": {
+			"texture": "https://femboy-hooters.net/u/UjEhtS.png",
+			"model": "https://femboy-hooters.net/r/y7klBZ.json",
+			"anchor": "HEAD"
+		}
+	},
+	"users": {
+		"503450fc-72c2-4e87-8243-94e264977437": ":3"
+	}
+}
