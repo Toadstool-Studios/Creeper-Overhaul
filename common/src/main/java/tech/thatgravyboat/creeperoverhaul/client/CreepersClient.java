@@ -1,12 +1,19 @@
 package tech.thatgravyboat.creeperoverhaul.client;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
+import tech.thatgravyboat.creeperoverhaul.client.cosmetics.Cosmetics;
+import tech.thatgravyboat.creeperoverhaul.client.renderer.cosmetics.CosmeticLayer;
 import tech.thatgravyboat.creeperoverhaul.client.renderer.normal.CreeperModel;
 import tech.thatgravyboat.creeperoverhaul.client.renderer.normal.CreeperRenderer;
 import tech.thatgravyboat.creeperoverhaul.client.renderer.replaced.ReplacedCreeperRenderer;
@@ -14,15 +21,37 @@ import tech.thatgravyboat.creeperoverhaul.common.config.ClientConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.CreeperTypes;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.CreeperType;
+import tech.thatgravyboat.creeperoverhaul.common.network.NetworkHandler;
+import tech.thatgravyboat.creeperoverhaul.common.network.packets.ServerboundCosmeticPacket;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModBlocks;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModEntities;
+import tech.thatgravyboat.creeperoverhaul.mixin.LivingEntityRendererInvoker;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class CreepersClient {
 
     public static void init() {
         Creepers.CONFIGURATOR.register(ClientConfig.class);
+        Cosmetics.init();
+
+        ClientConfig.showCosmetic.addListener((oldValue, newValue) -> {
+            if (Minecraft.getInstance().level == null) return;
+            NetworkHandler.NETWORK.sendToServer(new ServerboundCosmeticPacket(newValue));
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void registerEntityLayers(Function<PlayerSkin.Model, PlayerRenderer> getter) {
+        PlayerRenderer defaultRenderer = getter.apply(PlayerSkin.Model.WIDE);
+        PlayerRenderer slimRenderer = getter.apply(PlayerSkin.Model.SLIM);
+        LivingEntityRendererInvoker<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> defaultInvoker = ((LivingEntityRendererInvoker<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>) defaultRenderer);
+        LivingEntityRendererInvoker<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> slimInvoker = ((LivingEntityRendererInvoker<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>) slimRenderer);
+        if (defaultRenderer != null && slimRenderer != null) {
+            defaultInvoker.invokeAddLayer(new CosmeticLayer(defaultRenderer));
+            slimInvoker.invokeAddLayer(new CosmeticLayer(slimRenderer));
+        }
     }
 
     public static void registerRenderers() {

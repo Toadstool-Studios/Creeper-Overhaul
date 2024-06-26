@@ -9,6 +9,7 @@ import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.CreeperTypes;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.CreeperAttributeBuilder;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.CreeperType;
+import tech.thatgravyboat.creeperoverhaul.common.network.NetworkHandler;
 import tech.thatgravyboat.creeperoverhaul.common.registry.*;
 import tech.thatgravyboat.creeperoverhaul.common.utils.Events;
 
@@ -27,6 +28,8 @@ public class Creepers {
         ModCreativeTabs.CREATIVE_TABS.init();
         ModItems.ITEMS.init();
         ModSounds.SOUNDS.init();
+
+        NetworkHandler.init();
     }
 
     public static void registerAttributes(Map<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> attributes) {

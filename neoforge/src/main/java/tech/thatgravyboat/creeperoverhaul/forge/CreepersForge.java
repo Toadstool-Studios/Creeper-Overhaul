@@ -10,14 +10,18 @@ import net.neoforged.fml.InterModComms;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
 import tech.thatgravyboat.creeperoverhaul.api.CreeperPlugin;
 import tech.thatgravyboat.creeperoverhaul.api.PluginRegistry;
 import tech.thatgravyboat.creeperoverhaul.client.neoforge.CreepersForgeClient;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModBlocks;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModSpawns;
+import tech.thatgravyboat.creeperoverhaul.common.utils.ServerCosmetics;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +39,10 @@ public class CreepersForge {
         bus.addListener(CreepersForgeClient::onShaderRegister);
         bus.addListener(CreepersForgeClient::onClient);
         bus.addListener(this::onIMC);
+
+        if (FMLLoader.getDist().isClient()) {
+            CreepersForgeClient.init(bus);
+        }
     }
 
     public void onAttributes(EntityAttributeCreationEvent event) {

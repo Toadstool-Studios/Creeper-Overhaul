@@ -6,7 +6,6 @@ license="All rights reserved"
     modId="creeperoverhaul"
     version="${version}"
     displayName="Creeper Overhaul"
-    logoFile="icon.png"
     authors="Artist/Creator - Joosh, Dev - ThatGravyBoat"
     description="Creeper overhaul adds a variety of different biome-specific creeper types to your world, some friendlier than others :)"
 
