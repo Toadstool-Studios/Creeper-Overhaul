@@ -6,16 +6,16 @@ import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.ToolAction;
 import net.neoforged.neoforge.event.EventHooks;
 import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
 
 public class PlatformUtilsImpl {
 
-    private static final ToolAction SHEARS_ENTITY_USE = ToolAction.get("shears_entity_use");
-    private static final ToolAction IGNITE = ToolAction.get("ignite");
+    private static final ItemAbility SHEARS_ENTITY_USE = ItemAbility.get("shears_entity_use");
+    private static final ItemAbility IGNITE = ItemAbility.get("ignite");
 
     private static Boolean usingOptifine = null;
 

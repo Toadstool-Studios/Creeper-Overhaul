@@ -25,6 +25,6 @@ dependencies {
     neoForge(group = "net.neoforged", name = "neoforge", version = neoforgeVersion)
 
     forgeRuntimeLibrary("com.teamresourceful:yabn:1.0.3")
-    forgeRuntimeLibrary("com.teamresourceful:bytecodecs:1.0.2")
+    forgeRuntimeLibrary("com.teamresourceful:bytecodecs:1.1.2")
     forgeRuntimeLibrary("com.eliotlash.mclib:mclib:20")
 }
