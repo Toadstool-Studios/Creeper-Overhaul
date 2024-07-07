@@ -1,6 +1,8 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils.fabric;
 
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.Holder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
@@ -22,11 +24,11 @@ public class PlatformUtilsImpl {
     }
 
     public static boolean isShears(ItemStack stack) {
-        return stack.getItem() instanceof ShearsItem;
+        return stack.getItem() instanceof ShearsItem || stack.is(ConventionalItemTags.SHEAR_TOOLS);
     }
 
     public static boolean isFlintAndSteel(ItemStack stack) {
-        return stack.getItem() instanceof FlintAndSteelItem;
+        return stack.getItem() instanceof FlintAndSteelItem || stack.is(ItemTags.CREEPER_IGNITERS);
     }
 
     public static Holder<Attribute> getModAttribute(String name) {

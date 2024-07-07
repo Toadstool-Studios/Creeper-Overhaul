@@ -1,6 +1,7 @@
 package tech.thatgravyboat.creeperoverhaul.common.utils.neoforge;
 
 import net.minecraft.core.Holder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
@@ -8,6 +9,7 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.EventHooks;
 import tech.thatgravyboat.creeperoverhaul.common.config.CreepersConfig;
 import tech.thatgravyboat.creeperoverhaul.common.entity.base.BaseCreeper;
@@ -37,11 +39,11 @@ public class PlatformUtilsImpl {
     }
 
     public static boolean isShears(ItemStack stack) {
-        return stack.getItem() instanceof ShearsItem || stack.canPerformAction(SHEARS_ENTITY_USE);
+        return stack.getItem() instanceof ShearsItem || stack.canPerformAction(SHEARS_ENTITY_USE) || stack.is(Tags.Items.TOOLS_SHEAR);
     }
 
     public static boolean isFlintAndSteel(ItemStack stack) {
-        return stack.getItem() instanceof FlintAndSteelItem || stack.canPerformAction(IGNITE);
+        return stack.getItem() instanceof FlintAndSteelItem || stack.canPerformAction(IGNITE) || stack.is(ItemTags.CREEPER_IGNITERS);
     }
 
     public static Holder<Attribute> getModAttribute(String name) {

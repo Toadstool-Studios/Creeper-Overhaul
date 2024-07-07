@@ -52,7 +52,7 @@ import tech.thatgravyboat.creeperoverhaul.common.utils.PlatformUtils;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-public class BaseCreeper extends Creeper implements GeoEntity {
+public class BaseCreeper extends Creeper implements GeoEntity, Shearable {
 
     private static final EntityDataAccessor<Boolean> DATA_IS_ATTACKING = SynchedEntityData.defineId(BaseCreeper.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_IS_SHEARED = SynchedEntityData.defineId(BaseCreeper.class, EntityDataSerializers.BOOLEAN);
@@ -274,13 +274,10 @@ public class BaseCreeper extends Creeper implements GeoEntity {
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
-        if (this.type.isShearable() && !isSheared() && PlatformUtils.isShears(stack)) {
-            this.level().playSound(player, this.blockPosition(), SoundEvents.SNOW_GOLEM_SHEAR, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
-            if (!this.level().isClientSide()) {
-                this.entityData.set(DATA_IS_SHEARED, true);
-                stack.hurtAndBreak(1, player, slot);
-                this.spawnAtLocation(this.type.shearDrop().get(), 1.7F);
-            }
+        if (readyForShearing() && PlatformUtils.isShears(stack)) {
+            shear(SoundSource.AMBIENT);
+            this.gameEvent(GameEvent.SHEAR, player);
+            stack.hurtAndBreak(1, player, slot);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return InteractionResult.PASS;
@@ -392,4 +389,17 @@ public class BaseCreeper extends Creeper implements GeoEntity {
         return this.cache;
     }
     //endregion
+
+    @Override
+    public void shear(SoundSource soundSource) {
+        this.level().playSound(null, this, SoundEvents.SNOW_GOLEM_SHEAR, soundSource, 1.0F, 1.0F);
+        if (!this.level().isClientSide()) {
+            this.spawnAtLocation(this.type.shearDrop().get(), 1.7F);
+        }
+    }
+
+    @Override
+    public boolean readyForShearing() {
+        return !isSheared() && this.type.isShearable();
+    }
 }

@@ -11,17 +11,14 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.fml.loading.FMLLoader;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import tech.thatgravyboat.creeperoverhaul.Creepers;
 import tech.thatgravyboat.creeperoverhaul.api.CreeperPlugin;
 import tech.thatgravyboat.creeperoverhaul.api.PluginRegistry;
 import tech.thatgravyboat.creeperoverhaul.client.neoforge.CreepersForgeClient;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModBlocks;
 import tech.thatgravyboat.creeperoverhaul.common.registry.ModSpawns;
-import tech.thatgravyboat.creeperoverhaul.common.utils.ServerCosmetics;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,11 +50,11 @@ public class CreepersForge {
         }
     }
 
-    public void onSpawnPlacement(SpawnPlacementRegisterEvent event) {
+    public void onSpawnPlacement(RegisterSpawnPlacementsEvent event) {
         ModSpawns.addSpawnRules(new ModSpawns.Registrar() {
             @Override
             public <T extends Mob> void register(Supplier<EntityType<T>> entityType, SpawnPlacementType type, Heightmap.Types types, SpawnPlacements.SpawnPredicate<T> spawnPredicate) {
-                event.register(entityType.get(), type, types, spawnPredicate, SpawnPlacementRegisterEvent.Operation.OR);
+                event.register(entityType.get(), type, types, spawnPredicate, RegisterSpawnPlacementsEvent.Operation.OR);
             }
         });
     }
