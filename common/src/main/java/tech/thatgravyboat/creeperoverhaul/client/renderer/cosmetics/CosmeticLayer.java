@@ -56,18 +56,19 @@ public class CosmeticLayer extends RenderLayer<AbstractClientPlayer, PlayerModel
 
         CosmeticModel model = cosmetic.model();
         BakedGeoModel bakedModel = model.getBakedModel(null);
+        if (model.isLoaded()) {
+            renderer.setModel(model);
 
-        renderer.setModel(model);
+            AnimationState<Cosmetic> state = new AnimationState<>(cosmetic, 0, 0, headPitch, true);
+            model.setCustomAnimations(cosmetic, renderer.getInstanceId(cosmetic), state);
 
-        AnimationState<Cosmetic> state = new AnimationState<>(cosmetic, 0, 0, headPitch, true);
-        model.setCustomAnimations(cosmetic, renderer.getInstanceId(cosmetic), state);
-
-        renderer.reRender(
-                bakedModel, stack, source, cosmetic,
-                type, consumer,
-                partialTick,
-                packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF
-        );
+            renderer.reRender(
+                    bakedModel, stack, source, cosmetic,
+                    type, consumer,
+                    partialTick,
+                    packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF
+            );
+        }
 
         stack.popPose();
     }

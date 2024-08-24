@@ -58,5 +58,9 @@
   "subtitles.creeperoverhaul.entity.ocean.creeper.death": "Creeper dies",
   "subtitles.creeperoverhaul.entity.ocean.creeper.hurt": "Creeper hurts",
   "subtitles.creeperoverhaul.entity.ocean.creeper.inflate": "Ocean Creeper inflates",
-  "subtitles.creeperoverhaul.entity.ocean.creeper.deflate": "Ocean Creeper deflates"
+  "subtitles.creeperoverhaul.entity.ocean.creeper.deflate": "Ocean Creeper deflates",
+
+  "gui.creeperoverhaul.cosmetics": "Cosmetics",
+  "gui.creeperoverhaul.cosmetics.login": "Login to Creeper Overhaul",
+  "gui.creeperoverhaul.cosmetics.preview_in_game": "You must be in-game to preview cosmetics."
 }

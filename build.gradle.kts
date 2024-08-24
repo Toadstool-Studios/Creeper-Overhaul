@@ -52,6 +52,8 @@ subprojects {
         "modApi"(group = "com.teamresourceful.resourcefulconfig", name = "resourcefulconfig-$modLoader-$minecraftVersion", version = resourcefulConfigVersion)
 
         "modImplementation"(group = "software.bernie.geckolib", name = "geckolib-$modLoader-$minecraftVersion", version = geckolibVersion)
+
+        "include"(implementation(group = "com.teamresourceful", name = "resourceful-cosmetics-4j", version = "1.0.3"))
     }
 
     java {
