@@ -19,13 +19,17 @@ public class Cosmetic implements GeoAnimatable {
 
     private final String id;
     private final String name;
+    private final CosmeticTransformation transformation;
+    private final CosmeticTransformation displayTransformation;
     private final CosmeticTexture texture;
     private final CosmeticModel model;
     private final CosmeticAnchor anchor;
 
-    public Cosmetic(String id, String name, CosmeticTexture texture, CosmeticModel model, CosmeticAnchor anchor) {
+    public Cosmetic(String id, String name, CosmeticTransformation transformation, CosmeticTransformation displayTransformation, CosmeticTexture texture, CosmeticModel model, CosmeticAnchor anchor) {
         this.id = id;
         this.name = name;
+        this.transformation = transformation;
+        this.displayTransformation = displayTransformation;
         this.texture = texture;
         this.model = model;
         this.anchor = anchor;
@@ -41,6 +45,14 @@ public class Cosmetic implements GeoAnimatable {
 
     public CosmeticAnchor anchor() {
         return this.anchor;
+    }
+
+    public CosmeticTransformation transformation() {
+        return this.transformation;
+    }
+
+    public CosmeticTransformation displayTransformation() {
+        return this.displayTransformation;
     }
 
     @Override
@@ -73,13 +85,16 @@ public class Cosmetic implements GeoAnimatable {
         String name = GsonHelper.getAsString(json, "name", id);
         CosmeticTexture texture = new CosmeticTexture(json.get("texture").getAsString());
         CosmeticGeoModel model = new CosmeticGeoModel(json.get("model").getAsString());
+        CosmeticTransformation transformation = CosmeticTransformation.fromJson(json.getAsJsonObject("transformation"));
+        CosmeticTransformation displayTransformation = CosmeticTransformation.fromJson(json.getAsJsonObject("displayTransformation"));
 
         return new Cosmetic(
                 id,
                 name,
+                transformation,
+                displayTransformation,
                 texture,
                 new CosmeticModel(model, texture),
-                CosmeticAnchor.valueOf(json.get("anchor").getAsString())
-        );
+                CosmeticAnchor.valueOf(json.get("anchor").getAsString()));
     }
 }

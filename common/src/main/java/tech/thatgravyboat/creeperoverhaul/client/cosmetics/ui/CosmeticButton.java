@@ -47,11 +47,14 @@ public class CosmeticButton extends AbstractButton {
             stack.mulPose(Axis.XN.rotationDegrees(180));
             stack.mulPose(Axis.YN.rotationDegrees(180));
             stack.scale(25, 25, 25);
+            cosmetic.displayTransformation().applyScale(stack);
 
             stack.translate(0.05, -0.4, 0);
 
             stack.mulPose(Axis.YP.rotationDegrees(135));
             stack.translate(0, 0, 0.6);
+            cosmetic.displayTransformation().applyRotation(stack);
+            cosmetic.displayTransformation().applyTranslation(stack);
 
             MultiBufferSource.BufferSource source = Minecraft.getInstance().renderBuffers().bufferSource();
 

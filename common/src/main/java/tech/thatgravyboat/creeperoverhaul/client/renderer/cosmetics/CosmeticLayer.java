@@ -47,9 +47,12 @@ public class CosmeticLayer extends RenderLayer<AbstractClientPlayer, PlayerModel
             case RIGHT_LEG -> getParentModel().rightLeg;
         };
         part.translateAndRotate(stack);
+        cosmetic.transformation().applyScale(stack);
         stack.mulPose(Axis.XN.rotationDegrees(180));
         stack.mulPose(Axis.YN.rotationDegrees(180));
         stack.translate(-0.5, -0.5, -0.5);
+        cosmetic.transformation().applyTranslation(stack);
+        cosmetic.transformation().applyRotation(stack);
 
         RenderType type = RenderType.entityTranslucent(cosmetic.texture().getResourceLocation());
         VertexConsumer consumer = source.getBuffer(type);
