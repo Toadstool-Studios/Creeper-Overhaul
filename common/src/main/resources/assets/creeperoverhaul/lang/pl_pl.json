@@ -30,6 +30,8 @@
     "item.creeperoverhaul.snowy_creeper_spawn_egg": "Jajo przyzywające śnieżnego creepera",
     "entity.creeperoverhaul.ocean_creeper": "Oceaniczny creeper",
     "item.creeperoverhaul.ocean_creeper_spawn_egg": "Jajo przyzywające oceanicznego creepera",
+    "entity.creeperoverhaul.birch_creeper": "Brzozowy creeper",
+    "item.creeperoverhaul.birch_creeper_spawn_egg": "Jajo przyzywające brzozowego creepera",
     "block.creeperoverhaul.tiny_cactus": "Mały kaktus",
     "block.creeperoverhaul.potted_tiny_cactus": "Mały kaktus w doniczce",
   
@@ -54,7 +56,12 @@
     "subtitles.creeperoverhaul.entity.sand.creeper.prime": "Creeper syczy",
     "subtitles.creeperoverhaul.entity.sand.creeper.explosion": "Wybuch",
     "subtitles.creeperoverhaul.entity.ocean.creeper.death": "Creeper ginie",
-     "subtitles.creeperoverhaul.entity.ocean.creeper.hurt": "Creeper cierpi",
+    "subtitles.creeperoverhaul.entity.ocean.creeper.hurt": "Creeper cierpi",
     "subtitles.creeperoverhaul.entity.ocean.creeper.inflate": "Oceaniczny creeper się nadyma",
-    "subtitles.creeperoverhaul.entity.ocean.creeper.deflate": "Oceaniczny creeper flaczeje"
+    "subtitles.creeperoverhaul.entity.ocean.creeper.deflate": "Oceaniczny creeper flaczeje",
+	
+    "gui.creeperoverhaul.cosmetics": "Kosmetyka",
+    "gui.creeperoverhaul.cosmetics.login": "Zaloguj się do Creeper Overhaul",
+    "gui.creeperoverhaul.cosmetics.preview_in_game": "Musisz być w grze, aby zobaczyć podgląd kosmetyków."
+	
   }
