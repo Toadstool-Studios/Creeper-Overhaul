@@ -1,0 +1,35 @@
+[versions]
+
+# Minecraft
+minecraft = "1.21.1"
+fabric-api = "0.110.0"
+neoforge = "21.1.90"
+
+# Libraries
+rlib = "3.0.12"
+rconfig = "3.0.8"
+rcosmetics = "1.0.3"
+geckolib = "4.7"
+
+# Plugins
+resourceful-loom = "1.0.+"
+
+[libraries]
+
+rlib-common = { module = "com.teamresourceful.resourcefullib:resourcefullib-common-1.21", version.ref = "rlib" }
+rlib-fabric = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21", version.ref = "rlib" }
+rlib-neoforge = { module = "com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21", version.ref = "rlib" }
+
+rconfig-common = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-common-1.21", version.ref = "rconfig" }
+rconfig-fabric = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21", version.ref = "rconfig" }
+rconfig-neoforge = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-neoforge-1.21", version.ref = "rconfig" }
+
+geckolib-common = { module = "software.bernie.geckolib:geckolib-common-1.21.1", version.ref = "geckolib" }
+geckolib-fabric = { module = "software.bernie.geckolib:geckolib-fabric-1.21.1", version.ref = "geckolib" }
+geckolib-neoforge = { module = "software.bernie.geckolib:geckolib-neoforge-1.21.1", version.ref = "geckolib" }
+
+rcosmetics = { module = "com.teamresourceful:resourceful-cosmetics-4j", version.ref = "rcosmetics" }
+
+[plugins]
+
+resourceful-loom = { id = "com.teamresourceful.plugins.loom", version.ref = "resourceful-loom" }

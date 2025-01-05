@@ -88,7 +88,8 @@ public class WaterCreeper extends BaseCreeper {
         return false;
     }
 
-    protected <E extends GeoAnimatable> PlayState action(AnimationState<E> event) {
+    @Override
+    protected <E extends GeoAnimatable> PlayState animate(AnimationState<E> event) {
         AnimationProcessor.QueuedAnimation animation = event.getController().getCurrentAnimation();
         if (isAttacking()) {
             event.getController().setAnimation(AnimationConstants.ATTACK);
@@ -101,6 +102,8 @@ public class WaterCreeper extends BaseCreeper {
         } else if (event.isMoving()) {
             event.getController().setAnimation(AnimationConstants.SWIM);
             return PlayState.CONTINUE;
+        } else {
+            event.getController().setAnimation(AnimationConstants.IDLE);
         }
         return PlayState.STOP;
     }

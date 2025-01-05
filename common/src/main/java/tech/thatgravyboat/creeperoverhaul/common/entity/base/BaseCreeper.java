@@ -342,12 +342,12 @@ public class BaseCreeper extends Creeper implements GeoEntity, Shearable {
     //region Sounds
 
     @Override
-    protected SoundEvent getHurtSound(@NotNull DamageSource source) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource source) {
         return type.getHurtSound(this).orElseGet(() -> super.getHurtSound(source));
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         return type.getDeathSound(this).orElseGet(super::getDeathSound);
     }
 
@@ -359,29 +359,23 @@ public class BaseCreeper extends Creeper implements GeoEntity, Shearable {
     //endregion
 
     //region Animation
-    protected <E extends GeoAnimatable> PlayState idle(AnimationState<E> event) {
-        event.getController().setAnimation(AnimationConstants.IDLE);
-        return PlayState.CONTINUE;
-    }
-
-    protected <E extends GeoAnimatable> PlayState action(AnimationState<E> event) {
+    protected <E extends GeoAnimatable> PlayState animate(AnimationState<E> event) {
         AnimationProcessor.QueuedAnimation animation = event.getController().getCurrentAnimation();
         if (isAttacking()) {
             event.getController().setAnimation(AnimationConstants.ATTACK);
-            return PlayState.CONTINUE;
         } else if (animation != null && animation.animation().name().equals("animation.creeper.attack") && event.getController().getAnimationState().equals(AnimationController.State.RUNNING)) {
             return PlayState.CONTINUE;
         } else if (event.isMoving()) {
             event.getController().setAnimation(AnimationConstants.WALK);
-            return PlayState.CONTINUE;
+        } else {
+            event.getController().setAnimation(AnimationConstants.IDLE);
         }
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "action_controller", 3, this::action));
-        controllers.add(new AnimationController<>(this, "idle_controller", 0, this::idle));
+        controllers.add(new AnimationController<>(this, "controller", 3, this::animate));
     }
 
     @Override

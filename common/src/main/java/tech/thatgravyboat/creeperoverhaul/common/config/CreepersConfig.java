@@ -4,7 +4,6 @@ import com.teamresourceful.resourcefulconfig.api.annotations.Comment;
 import com.teamresourceful.resourcefulconfig.api.annotations.Config;
 import com.teamresourceful.resourcefulconfig.api.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.api.annotations.ConfigInfo;
-import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
 
 @Config(
         value = "creeperoverhaul",
@@ -35,10 +34,7 @@ import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
 @ConfigInfo.Color("#7BB252")
 public final class CreepersConfig {
 
-    @ConfigEntry(
-            type = EntryType.BOOLEAN,
-            id = "destroyBlocks",
-            translation = "Destroy Blocks")
+    @ConfigEntry(id = "destroyBlocks", translation = "Destroy Blocks")
     @Comment("Changes the Creeper Overhaul creepers to destroy blocks or not.")
     public static boolean destroyBlocks = true;
 }

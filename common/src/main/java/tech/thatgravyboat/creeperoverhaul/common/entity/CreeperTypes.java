@@ -286,7 +286,7 @@ public class CreeperTypes {
             .addAttributes(builder -> {
                 builder.add(Attributes.MAX_HEALTH, 16);
                 builder.add(Attributes.MOVEMENT_SPEED, 1.7);
-                builder.add(Attributes.ENTITY_INTERACTION_RANGE, 3);
+                builder.add(Attributes.ENTITY_INTERACTION_RANGE, 2.5);
                 builder.add("swim_speed", 1.7);
             })
             .setDeathSounds(ModSounds.OCEAN_DEATH)

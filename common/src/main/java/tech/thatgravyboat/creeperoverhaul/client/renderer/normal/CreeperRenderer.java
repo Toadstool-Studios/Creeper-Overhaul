@@ -26,6 +26,8 @@ public class CreeperRenderer<E extends BaseCreeper> extends GeoEntityRenderer<E>
 
     @Override
     public void render(@NotNull E creeper, float entityYaw, float partialTicks, PoseStack stack, @NotNull MultiBufferSource bufferIn, int packedLightIn) {
+        if (creeper.isInvisible()) return;
+
         float f = creeper.getSwelling(partialTicks);
         float f1 = 1.0F + Mth.sin(f * 100.0F) * f * 0.01F;
         f = Mth.clamp(f, 0.0F, 1.0F);

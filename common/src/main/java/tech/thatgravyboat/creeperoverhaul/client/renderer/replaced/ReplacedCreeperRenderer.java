@@ -36,6 +36,12 @@ public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<Creeper, 
     }
 
     @Override
+    public void render(Creeper entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        if (entity.isInvisible()) return;
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+    }
+
+    @Override
     public int getPackedOverlay(ReplacedCreeper animatable, float u, float partialTick) {
         return super.getPackedOverlay(animatable, getSwellOverlay(this.currentEntity, partialTick), partialTick);
     }

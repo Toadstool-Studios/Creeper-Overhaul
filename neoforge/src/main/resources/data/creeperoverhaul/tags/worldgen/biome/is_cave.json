@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#c:is_cave"
+  ],
+  "remove": [
+    "minecraft:deep_dark"
+  ]
+}

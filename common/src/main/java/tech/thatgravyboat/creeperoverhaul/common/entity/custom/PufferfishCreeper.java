@@ -35,7 +35,7 @@ public class PufferfishCreeper extends WaterCreeper {
     private static final List<EntityDimensions> DIMENSIONS = List.of(
             EntityDimensions.scalable(0.6875f, 1.125f),
             EntityDimensions.scalable(0.625f, 0.9375f),
-            EntityDimensions.scalable(1f, 1.375f)
+            EntityDimensions.scalable(1.1f, 1.375f)
     );
 
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(PufferfishCreeper.class, EntityDataSerializers.BYTE);

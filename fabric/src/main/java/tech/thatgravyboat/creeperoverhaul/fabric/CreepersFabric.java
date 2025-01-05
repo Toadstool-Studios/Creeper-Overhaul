@@ -79,8 +79,8 @@ public class CreepersFabric implements ModInitializer {
         addCreeper(tag(ConventionalBiomeTags.IS_MOUNTAIN).and(tag(ConventionalBiomeTags.IS_SNOWY)), ModEntities.HILLS_CREEPER);
         addCreeper(tag(ConventionalBiomeTags.IS_MOUNTAIN), ModEntities.CAVE_CREEPER, 50);
 
-        addCreeper(tag(ConventionalBiomeTags.IS_CAVE), ModEntities.DRIPSTONE_CREEPER);
-        addCreeper(tag(ConventionalBiomeTags.IS_CAVE), ModEntities.CAVE_CREEPER, 50);
+        addCreeper(tag(ConventionalBiomeTags.IS_CAVE).and(tag(ConventionalBiomeTags.NO_DEFAULT_MONSTERS).negate()), ModEntities.DRIPSTONE_CREEPER);
+        addCreeper(tag(ConventionalBiomeTags.IS_CAVE).and(tag(ConventionalBiomeTags.NO_DEFAULT_MONSTERS).negate()), ModEntities.CAVE_CREEPER, 50);
 
         addCreeper(tag(ConventionalBiomeTags.IS_JUNGLE), ModEntities.BAMBOO_CREEPER);
         addCreeper(tag(ConventionalBiomeTags.IS_JUNGLE), ModEntities.JUNGLE_CREEPER);

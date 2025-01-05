@@ -9,7 +9,7 @@
     "#c:is_mushroom",
     "#c:is_taiga",
     "#c:is_mountain",
-    "#c:is_cave",
+    "#creeperoverhaul:is_cave",
     "#c:is_jungle",
     "#c:is_swamp",
     "#c:is_dark_forest",
